@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ssms.smartsocietymanagement.controller.DashboardController" stylesheets="@../styles/styles.css">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="dashboard-header">
+            <padding>
+                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+            </padding>
+            <children>
+                <Label text="Society Management System" styleClass="app-title">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+                <Region HBox.hgrow="ALWAYS" />
+                <Label fx:id="welcomeLabel" text="Welcome, User!" styleClass="welcome-label" />
+                <Button onAction="#handleLogoutButton" text="Logout" styleClass="button-logout" />
+            </children>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox alignment="TOP_CENTER" spacing="10.0" styleClass="sidebar">
+            <padding>
+                <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
+            </padding>
+            <children>
+                <Label text="MENU" styleClass="menu-header">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Label>
+                <Separator />
+                <Button onAction="#handleNoticesButton" text="Notices" styleClass="menu-button" maxWidth="Infinity" />
+                <Button onAction="#handleComplaintsButton" text="Complaints" styleClass="menu-button" maxWidth="Infinity" />
+                <Button onAction="#handlePaymentsButton" text="Payments" styleClass="menu-button" maxWidth="Infinity" />
+                <Button onAction="#handleAmenitiesButton" text="Amenities" styleClass="menu-button" maxWidth="Infinity" />
+                <Button onAction="#handleProfileButton" text="Profile" styleClass="menu-button" maxWidth="Infinity" />
+            </children>
+        </VBox>
+    </left>
+
+    <center>
+<!--        <StackPane fx:id="mainContentPane">-->
+<!--            &lt;!&ndash; Dashboard content will be loaded here &ndash;&gt;-->
+<!--        </StackPane>-->
+    </center>
+</BorderPane>

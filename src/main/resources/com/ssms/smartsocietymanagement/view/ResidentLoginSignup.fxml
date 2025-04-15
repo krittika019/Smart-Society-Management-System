@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+
+<VBox alignment="CENTER" spacing="15.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ssms.smartsocietymanagement.controller.ResidentLoginSignupController" stylesheets="@../styles/styles.css">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <children>
+        <Label text="Resident Portal" styleClass="title-label">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+
+        <TabPane tabClosingPolicy="UNAVAILABLE" prefHeight="450.0" prefWidth="700.0">
+            <tabs>
+                <Tab text="Login">
+                    <content>
+                        <VBox alignment="CENTER" spacing="15.0" styleClass="tab-content">
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                            </padding>
+                            <children>
+                                <Label text="Resident Login" styleClass="subtitle-label" />
+                                <GridPane hgap="10" vgap="15" alignment="CENTER">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="250.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label text="Username:" styleClass="form-label" GridPane.rowIndex="0" />
+                                        <TextField fx:id="loginUsername" promptText="Enter username" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                                        <Label text="Password:" styleClass="form-label" GridPane.rowIndex="1" />
+                                        <PasswordField fx:id="loginPassword" promptText="Enter password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    </children>
+                                </GridPane>
+                                <Button onAction="#handleLogin" text="Login" styleClass="button-primary" />
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+                <Tab text="Sign Up">
+                    <content>
+                        <VBox alignment="CENTER" spacing="15.0" styleClass="tab-content">
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                            </padding>
+                            <children>
+                                <Label text="New Resident Registration" styleClass="subtitle-label" />
+                                <GridPane hgap="10" vgap="15" alignment="CENTER">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="250.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label text="Full Name:" styleClass="form-label" GridPane.rowIndex="0" />
+                                        <TextField fx:id="signupName" promptText="Enter your full name" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                                        <Label text="Username:" styleClass="form-label" GridPane.rowIndex="1" />
+                                        <TextField fx:id="signupUsername" promptText="Choose a username" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                                        <Label text="Password:" styleClass="form-label" GridPane.rowIndex="2" />
+                                        <PasswordField fx:id="signupPassword" promptText="Choose a password" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                                        <Label text="Email:" styleClass="form-label" GridPane.rowIndex="3" />
+                                        <TextField fx:id="signupEmail" promptText="Enter your email" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                                        <Label text="Apartment Number:" styleClass="form-label" GridPane.rowIndex="4" />
+                                        <TextField fx:id="signupApartment" promptText="Enter your apartment number" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+                                        <Label text="Phone Number:" styleClass="form-label" GridPane.rowIndex="5" />
+                                        <TextField fx:id="signupPhone" promptText="Enter your phone number" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    </children>
+                                </GridPane>
+                                <Button onAction="#handleSignup" text="Register" styleClass="button-primary" />
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+
+        <Button onAction="#handleBackButton" text="Back" styleClass="button-secondary" />
+    </children>
+</VBox>

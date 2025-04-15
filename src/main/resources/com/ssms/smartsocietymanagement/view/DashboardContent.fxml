@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+
+<VBox alignment="TOP_CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../styles/styles.css">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <children>
+        <Label text="Dashboard Overview" styleClass="page-title">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+
+        <HBox spacing="20.0" alignment="CENTER">
+            <children>
+                <VBox styleClass="summary-card" alignment="CENTER">
+                    <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                    </padding>
+                    <children>
+                        <Label text="Pending Notices" styleClass="card-title" />
+                        <Label text="5" styleClass="card-value" />
+                    </children>
+                </VBox>
+
+                <VBox styleClass="summary-card" alignment="CENTER">
+                    <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                    </padding>
+                    <children>
+                        <Label text="Pending Complaints" styleClass="card-title" />
+                        <Label text="2" styleClass="card-value" />
+                    </children>
+                </VBox>
+
+                <VBox styleClass="summary-card" alignment="CENTER">
+                    <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                    </padding>
+                    <children>
+                        <Label text="Upcoming Events" styleClass="card-title" />
+                        <Label text="3" styleClass="card-value" />
+                    </children>
+                </VBox>
+
+                <VBox styleClass="summary-card" alignment="CENTER">
+                    <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                    </padding>
+                    <children>
+                        <Label text="Payment Due" styleClass="card-title" />
+                        <Label text="₹5,000" styleClass="card-value" />
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Recent Notices">
+                    <content>
+                        <VBox spacing="10">
+                            <padding>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </padding>
+                            <children>
+                                <ListView prefHeight="200.0" styleClass="notices-list">
+                                    <!-- This would be populated from the controller -->
+                                </ListView>
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+                <Tab text="Maintenance Updates">
+                    <content>
+                        <VBox spacing="10">
+                            <padding>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </padding>
+                            <children>
+                                <ListView prefHeight="200.0" styleClass="maintenance-list">
+                                    <!-- This would be populated from the controller -->
+                                </ListView>
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+
+        <HBox spacing="20.0">
+            <children>
+                <VBox styleClass="chart-container" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label text="Monthly Maintenance Expenses" styleClass="chart-title" />
+                        <PieChart prefHeight="250.0" prefWidth="400.0" />
+                    </children>
+                </VBox>
+
+                <VBox styleClass="chart-container" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label text="Upcoming Events" styleClass="chart-title" />
+                        <TableView prefHeight="250.0" prefWidth="400.0">
+                            <columns>
+                                <TableColumn text="Date" prefWidth="100.0" />
+                                <TableColumn text="Event" prefWidth="180.0" />
+                                <TableColumn text="Location" prefWidth="120.0" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </children>
+</VBox>
