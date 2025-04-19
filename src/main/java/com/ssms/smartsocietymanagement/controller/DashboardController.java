@@ -2,11 +2,13 @@ package com.ssms.smartsocietymanagement.controller;
 
 import com.ssms.smartsocietymanagement.model.Admin;
 import com.ssms.smartsocietymanagement.model.Resident;
+import com.ssms.smartsocietymanagement.util.DatabaseHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.BorderPane;
@@ -14,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class DashboardController {
 
@@ -23,15 +26,57 @@ public class DashboardController {
     @FXML
     private BorderPane mainContentPane;
 
+    @FXML
+    private Button approvalsButton;
+
+    @FXML
+    private Button visitorsButton;
+
+    @FXML
+    private Button billsButton;
+
     private Resident currentResident;
     private Admin currentAdmin;
     private String userType;
+    private String flatId;
+
+
+    @FXML
+    private void handleResidentApprovalsButton(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ssms/smartsocietymanagement/view/ResidentApprovals.fxml"));
+            Pane approvalsView = loader.load();
+
+            mainContentPane.setCenter(approvalsView);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void initData(Resident resident, String userType) {
         this.currentResident = resident;
         this.userType = userType;
         welcomeLabel.setText("Welcome, " + resident.getName() + "!");
+        // Get the resident's flat ID
+        try {
+            DatabaseHandler dbHandler = new DatabaseHandler();
+            this.flatId = dbHandler.getFlatIdByResidentId(resident.getId());
+            dbHandler.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         loadDefaultDashboardContent();
+        if (approvalsButton != null) {
+            approvalsButton.setVisible(false);
+        }
+        if (visitorsButton != null) {
+            visitorsButton.setText("Visitor Requests");
+        }
+
+        if (billsButton != null) {
+            billsButton.setText("Bill Payments");
+        }
     }
 
     public void initAdminData(Admin admin) {
@@ -39,12 +84,27 @@ public class DashboardController {
         this.userType = "admin";
         welcomeLabel.setText("Welcome, Admin " + admin.getName() + "!");
         loadDefaultDashboardContent();
+        if (approvalsButton != null) {
+            approvalsButton.setVisible(true);
+        }
     }
 
     private void loadDefaultDashboardContent() {
         try {
-            Pane dashboardContent = FXMLLoader.load(getClass().getResource("/fxml/DashboardContent.fxml"));
+            Pane dashboardContent = FXMLLoader.load(getClass().getResource("/com/ssms/smartsocietymanagement/view/DashboardContent.fxml"));
             mainContentPane.setCenter(dashboardContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    private void handleDashboardButton(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ssms/smartsocietymanagement/view/DashboardContent.fxml"));
+            Pane approvalsView = loader.load();
+
+            mainContentPane.setCenter(approvalsView);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -69,11 +129,48 @@ public class DashboardController {
     private void handleAmenitiesButton(ActionEvent event) {
         loadContentPane("/fxml/AmenitiesView.fxml");
     }
+    @FXML
+    private void handleVisitorsButton(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ssms/smartsocietymanagement/view/VisitorManagement.fxml"));
+            Pane visitorPane = loader.load();
+
+            VisitorManagementController controller = loader.getController();
+            if (userType.equals("resident")) {
+                controller.initResidentData(currentResident, flatId);
+            } else {
+                controller.initAdminData(currentAdmin);
+            }
+
+            mainContentPane.setCenter(visitorPane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+//    @FXML
+//    private void handleBillsButton(ActionEvent event) {
+//        try {
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ssms/smartsocietymanagement/view/BillManagement.fxml"));
+//            Pane billPane = loader.load();
+//
+//            BillManagementController controller = loader.getController();
+//            if (userType.equals("resident")) {
+//                controller.initResidentData(currentResident, flatId);
+//            } else {
+//                controller.initAdminData(currentAdmin);
+//            }
+//
+//            mainContentPane.setCenter(billPane);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @FXML
     private void handleProfileButton(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ProfileView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ssms/smartsocietymanagement/view/ProfileView.fxml"));
             Pane profilePane = loader.load();
 
             ProfileViewController controller = loader.getController();
@@ -91,12 +188,13 @@ public class DashboardController {
 
     @FXML
     private void handleLogoutButton(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/UserTypeSelection.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/ssms/smartsocietymanagement/view/UserTypeSelection.fxml"));
         Scene scene = new Scene(root, 800, 600);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
     }
+
 
     private void loadContentPane(String fxmlPath) {
         try {

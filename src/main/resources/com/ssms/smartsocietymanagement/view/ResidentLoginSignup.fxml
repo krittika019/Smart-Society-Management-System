@@ -5,6 +5,8 @@
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <VBox alignment="CENTER" spacing="15.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ssms.smartsocietymanagement.controller.ResidentLoginSignupController" stylesheets="@../styles/styles.css">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -82,11 +84,47 @@
                                         <Label text="Email:" styleClass="form-label" GridPane.rowIndex="3" />
                                         <TextField fx:id="signupEmail" promptText="Enter your email" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-                                        <Label text="Apartment Number:" styleClass="form-label" GridPane.rowIndex="4" />
-                                        <TextField fx:id="signupApartment" promptText="Enter your apartment number" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                        <Label text="Ownership Status:" styleClass="form-label" GridPane.rowIndex="4" />
+                                        <ComboBox fx:id="signupOwnershipStatus" GridPane.columnIndex="1" promptText="Select" GridPane.rowIndex="4">
+                                            <items>
+                                                <FXCollections fx:factory="observableArrayList">
+                                                    <String fx:value="OWNER" />
+                                                    <String fx:value="TENANT" />
+                                                </FXCollections>
+                                            </items>
+                                        </ComboBox>
 
-                                        <Label text="Phone Number:" styleClass="form-label" GridPane.rowIndex="5" />
-                                        <TextField fx:id="signupPhone" promptText="Enter your phone number" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                        <Label text="Block and Flat Number:" styleClass="form-label" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+
+                                        <HBox spacing="20" GridPane.rowIndex="5" GridPane.columnIndex="1">
+                                            <children>
+                                                <ComboBox fx:id="signupBlockName" promptText="Block" prefWidth="130">
+                                                    <items>
+                                                        <FXCollections fx:factory="observableArrayList">
+                                                            <String fx:value="A"/>
+                                                            <String fx:value="B"/>
+                                                            <String fx:value="C"/>
+                                                            <String fx:value="D"/>
+                                                            <String fx:value="E"/>
+                                                        </FXCollections>
+                                                    </items>
+                                                </ComboBox>
+
+                                                <ComboBox fx:id="signupFlatNumber" promptText="Flat Number" prefWidth="130">
+                                                    <items>
+                                                        <FXCollections fx:factory="observableArrayList">
+                                                            <String fx:value="101"/>
+                                                            <String fx:value="102"/>
+                                                            <String fx:value="103"/>
+                                                            <String fx:value="104"/>
+                                                            <String fx:value="201"/>
+                                                        </FXCollections>
+                                                    </items>
+                                                </ComboBox>
+                                            </children>
+                                        </HBox>
+                                        <Label text="Phone Number:" styleClass="form-label" GridPane.rowIndex="6" />
+                                        <TextField fx:id="signupPhone" promptText="Enter your phone number" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                     </children>
                                 </GridPane>
                                 <Button onAction="#handleSignup" text="Register" styleClass="button-primary" />

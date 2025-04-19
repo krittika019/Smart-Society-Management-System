@@ -1,29 +1,26 @@
 package com.ssms.smartsocietymanagement.model;
 
 public class Admin {
-    private int id;
+    private String Ad_id;
     private String name;
-    private String username;
-    private String password;
-    private String email;
-    private String role;
+    private String Ad_username;
+    private String Ad_password;
+    private String Ad_email;
 
-    public Admin(int id, String name, String username, String password, String email, String role) {
-        this.id = id;
+    public Admin(String ad_id, String name, String ad_username, String ad_password, String ad_email) {
+        Ad_id = ad_id;
         this.name = name;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.role = role;
+        Ad_username = ad_username;
+        Ad_password = ad_password;
+        Ad_email = ad_email;
     }
 
-    // Getters and Setters
-    public int getId() {
-        return id;
+    public String getAd_id() {
+        return Ad_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAd_id(String ad_id) {
+        Ad_id = ad_id;
     }
 
     public String getName() {
@@ -34,35 +31,27 @@ public class Admin {
         this.name = name;
     }
 
-    public String getUsername() {
-        return username;
+    public String getAd_username() {
+        return Ad_username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setAd_username(String ad_username) {
+        Ad_username = ad_username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getAd_password() {
+        return Ad_password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setAd_password(String ad_password) {
+        Ad_password = ad_password;
     }
 
-    public String getEmail() {
-        return email;
+    public String getAd_email() {
+        return Ad_email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    public void setAd_email(String ad_email) {
+        Ad_email = ad_email;
     }
 }

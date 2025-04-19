@@ -246,3 +246,25 @@
 .table-row-cell:even {
     -fx-background-color: white;
 }
+
+.table-row-cell:filled:selected {
+    -fx-background-color: #D6EAF8; /* Light blue background */
+}
+
+.table-row-cell:filled:selected .text {
+    -fx-fill: #2C3E50; /* Ensure text stays visible */
+}
+
+.menu-button-admin {
+    -fx-background-color: #E67E22;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 10px;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: #ECF0F1;
+}
+
+.menu-button-admin:hover {
+    -fx-background-color: #D35400;
+}

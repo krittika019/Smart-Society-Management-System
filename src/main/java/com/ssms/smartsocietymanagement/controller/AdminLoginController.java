@@ -45,6 +45,7 @@ public class AdminLoginController {
             }
         } catch (SQLException | IOException e) {
             showAlert(Alert.AlertType.ERROR, "Database Error", e.getMessage());
+            e.printStackTrace();
         }
     }
 

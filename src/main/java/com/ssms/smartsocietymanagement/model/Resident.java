@@ -1,31 +1,33 @@
 package com.ssms.smartsocietymanagement.model;
 
 public class Resident {
-    private int id;
+    private String res_id;
     private String name;
-    private String username;
-    private String password;
-    private String email;
-    private String apartmentNumber;
+    private String res_username;
+    private String res_password;
+    private String res_email;
+    private String ownership_status;
     private String phoneNumber;
+    private String Approval_status;
 
-    public Resident(int id, String name, String username, String password, String email, String apartmentNumber, String phoneNumber) {
-        this.id = id;
+    public Resident(String id, String name, String username, String password, String email, String ownership_status, String phoneNumber, String Approval_status) {
+        this.res_id = id;
         this.name = name;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.apartmentNumber = apartmentNumber;
+        this.res_username = username;
+        this.res_password = password;
+        this.res_email = email;
+        this.ownership_status = ownership_status;
         this.phoneNumber = phoneNumber;
+        this.Approval_status = Approval_status ;
     }
 
     // Getters and Setters
-    public int getId() {
-        return id;
+    public String getId() {
+        return res_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(String id) {
+        this.res_id = id;
     }
 
     public String getName() {
@@ -37,35 +39,43 @@ public class Resident {
     }
 
     public String getUsername() {
-        return username;
+        return res_username;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.res_username = username;
     }
 
     public String getPassword() {
-        return password;
+        return res_password;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.res_password = password;
     }
 
     public String getEmail() {
-        return email;
+        return res_email;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.res_email = email;
     }
 
-    public String getApartmentNumber() {
-        return apartmentNumber;
+    public String getOwnership_status() {
+        return ownership_status;
     }
 
-    public void setApartmentNumber(String apartmentNumber) {
-        this.apartmentNumber = apartmentNumber;
+    public String getApprovalStatus() {
+        return Approval_status;
+    }
+
+    public void setApproval_status(String Approval_status) {
+        this.Approval_status = Approval_status;
+    }
+
+    public void setOwnership_status(String ownership_status) {
+        this.ownership_status = ownership_status;
     }
 
     public String getPhoneNumber() {

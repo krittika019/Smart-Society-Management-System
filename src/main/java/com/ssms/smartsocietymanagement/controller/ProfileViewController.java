@@ -26,14 +26,14 @@ public class ProfileViewController {
         nameLabel.setText(resident.getName());
         usernameLabel.setText(resident.getUsername());
         emailLabel.setText(resident.getEmail());
-        apartmentLabel.setText(resident.getApartmentNumber());
+        apartmentLabel.setText(resident.getOwnership_status());
         phoneLabel.setText(resident.getPhoneNumber());
     }
 
     public void initAdminData(Admin admin) {
         nameLabel.setText(admin.getName());
-        usernameLabel.setText(admin.getUsername());
-        emailLabel.setText(admin.getEmail());
+        usernameLabel.setText(admin.getAd_username());
+        emailLabel.setText(admin.getAd_email());
         apartmentLabel.setText("Admin Office");
         phoneLabel.setText("Admin Contact");
     }
