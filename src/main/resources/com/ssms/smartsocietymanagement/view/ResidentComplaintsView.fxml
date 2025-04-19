@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="com.ssms.smartsocietymanagement.controller.ResidentComplaintsController">
+    <top>
+        <VBox spacing="15" styleClass="content-header">
+            <padding>
+                <Insets top="20" right="20" bottom="10" left="20" />
+            </padding>
+            <children>
+                <Label text="Complaints Management" styleClass="content-title">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+                <Separator />
+            </children>
+        </VBox>
+    </top>
+    
+    <center>
+        <SplitPane dividerPositions="0.4" orientation="VERTICAL">
+            <items>
+                <!-- New Complaint Form -->
+                <VBox spacing="10" styleClass="form-container">
+                    <padding>
+                        <Insets top="15" right="20" bottom="15" left="20" />
+                    </padding>
+                    <children>
+                        <Label text="Submit New Complaint" styleClass="section-header">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <GridPane hgap="10" vgap="10">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="100" prefWidth="120" />
+                                <ColumnConstraints hgrow="ALWAYS" minWidth="200" prefWidth="400" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints vgrow="SOMETIMES" />
+                                <RowConstraints vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <Label text="Subject:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                <TextField fx:id="subjectField" promptText="Enter complaint subject" 
+                                           GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                
+                                <Label text="Description:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                <TextArea fx:id="descriptionArea" promptText="Describe your complaint in detail" 
+                                          wrapText="true" prefHeight="100" 
+                                          GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            </children>
+                        </GridPane>
+                        <HBox alignment="CENTER_RIGHT" spacing="10">
+                            <children>
+                                <Button fx:id="clearButton" onAction="#handleClearButton" text="Clear" styleClass="button-secondary" />
+                                <Button fx:id="submitButton" onAction="#handleSubmitButton" text="Submit Complaint" styleClass="button-primary" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+                
+                <!-- Complaints List View -->
+                <VBox spacing="10">
+                    <padding>
+                        <Insets top="15" right="20" bottom="20" left="20" />
+                    </padding>
+                    <children>
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <children>
+                                <Label text="My Complaints" styleClass="section-header">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Button fx:id="refreshButton" onAction="#handleRefreshButton" text="Refresh" styleClass="button-refresh" />
+                            </children>
+                        </HBox>
+                        
+                        <TableView fx:id="complaintsTable" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="dateTimeColumn" text="Date &amp; Time" prefWidth="150" />
+                                <TableColumn fx:id="subjectColumn" text="Subject" prefWidth="200" />
+                                <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="300" />
+                                <TableColumn fx:id="statusColumn" text="Status" prefWidth="100" />
+                            </columns>
+                            <placeholder>
+                                <Label text="No complaints submitted yet" />
+                            </placeholder>
+                        </TableView>
+                    </children>
+                </VBox>
+            </items>
+        </SplitPane>
+    </center>
+</BorderPane>

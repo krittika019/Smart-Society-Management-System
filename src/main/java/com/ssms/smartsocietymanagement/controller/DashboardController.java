@@ -42,11 +42,11 @@ public class DashboardController {
     private String userType;
     private String flatId;
 
-
     @FXML
     private void handleResidentApprovalsButton(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ssms/smartsocietymanagement/view/ResidentApprovals.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/ssms/smartsocietymanagement/view/ResidentApprovals.fxml"));
             Pane approvalsView = loader.load();
 
             mainContentPane.setCenter(approvalsView);
@@ -93,16 +93,19 @@ public class DashboardController {
 
     private void loadDefaultDashboardContent() {
         try {
-            Pane dashboardContent = FXMLLoader.load(getClass().getResource("/com/ssms/smartsocietymanagement/view/DashboardContent.fxml"));
+            Pane dashboardContent = FXMLLoader
+                    .load(getClass().getResource("/com/ssms/smartsocietymanagement/view/DashboardContent.fxml"));
             mainContentPane.setCenter(dashboardContent);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     @FXML
     private void handleDashboardButton(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ssms/smartsocietymanagement/view/DashboardContent.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/ssms/smartsocietymanagement/view/DashboardContent.fxml"));
             Pane approvalsView = loader.load();
 
             mainContentPane.setCenter(approvalsView);
@@ -119,7 +122,30 @@ public class DashboardController {
 
     @FXML
     private void handleComplaintsButton(ActionEvent event) {
-        loadContentPane("/fxml/ComplaintsView.fxml");
+        try {
+            if (userType.equals("resident")) {
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/com/ssms/smartsocietymanagement/view/ResidentComplaintsView.fxml"));
+                Pane complaintsPane = loader.load();
+
+                ResidentComplaintsController controller = loader.getController();
+                controller.initData(currentResident);
+
+                mainContentPane.setCenter(complaintsPane);
+            } else {
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/com/ssms/smartsocietymanagement/view/AdminComplaintsView.fxml"));
+                Pane complaintsPane = loader.load();
+
+                AdminComplaintsController controller = loader.getController();
+                controller.initData(currentAdmin);
+
+                mainContentPane.setCenter(complaintsPane);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load complaints view: " + e.getMessage());
+        }
     }
 
     @FXML
@@ -131,11 +157,13 @@ public class DashboardController {
     private void handleAmenitiesButton(ActionEvent event) {
         loadContentPane("/fxml/AmenitiesView.fxml");
     }
+
     @FXML
     private void handleVisitorsButton(ActionEvent event) {
         try {
             if (userType.equals("resident")) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ssms/smartsocietymanagement/view/ResidentVisitorsView.fxml"));
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/com/ssms/smartsocietymanagement/view/ResidentVisitorsView.fxml"));
                 Pane visitorsPane = loader.load();
 
                 ResidentVisitorsController controller = loader.getController();
@@ -154,7 +182,8 @@ public class DashboardController {
 
                 mainContentPane.setCenter(visitorsPane);
             } else {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ssms/smartsocietymanagement/view/AdminVisitorsView.fxml"));
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/com/ssms/smartsocietymanagement/view/AdminVisitorsView.fxml"));
                 Pane visitorsPane = loader.load();
 
                 AdminVisitorsController controller = loader.getController();
@@ -167,6 +196,7 @@ public class DashboardController {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to load visitors view: " + e.getMessage());
         }
     }
+
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -178,7 +208,8 @@ public class DashboardController {
     @FXML
     private void handleProfileButton(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ssms/smartsocietymanagement/view/ProfileView.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/ssms/smartsocietymanagement/view/ProfileView.fxml"));
             Pane profilePane = loader.load();
 
             ProfileViewController controller = loader.getController();
@@ -196,13 +227,13 @@ public class DashboardController {
 
     @FXML
     private void handleLogoutButton(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/com/ssms/smartsocietymanagement/view/UserTypeSelection.fxml"));
+        Parent root = FXMLLoader
+                .load(getClass().getResource("/com/ssms/smartsocietymanagement/view/UserTypeSelection.fxml"));
         Scene scene = new Scene(root, 800, 600);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
     }
-
 
     private void loadContentPane(String fxmlPath) {
         try {
@@ -212,4 +243,5 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
+
 }

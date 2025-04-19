@@ -8,13 +8,17 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DatabaseHandler {
     private Connection connection;
     private static final String DB_URL = "jdbc:mysql://localhost:3306/ssms";
     private static final String USER = "root";
-    private static final String PASSWORD = "Krittika1929!";
+    // private static final String PASSWORD = "Krittika1929!";
+
+    private static final String PASSWORD = "Kritika@2004"; // kritika nair
 
     public DatabaseHandler() {
         try {
@@ -25,7 +29,8 @@ public class DatabaseHandler {
     }
 
     public boolean addResident(Resident resident, Flat flat) throws SQLException {
-        String query1 = "INSERT INTO residents (res_id, name, res_username, res_password, res_email, ownership_status, phonenumber, Approval_status) " +
+        String query1 = "INSERT INTO residents (res_id, name, res_username, res_password, res_email, ownership_status, phonenumber, Approval_status) "
+                +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         String query2 = "INSERT INTO flats (flat_id, block_name, flat_number) " +
                 "VALUES (?, ?, ?)";
@@ -77,6 +82,7 @@ public class DatabaseHandler {
         ps.close();
         return valid;
     }
+
     public boolean isResidentPendingApproval(String username, String password) throws SQLException {
         String query = "SELECT * FROM residents WHERE res_username = ? AND res_password = ? AND approval_status = 'PENDING'";
         PreparedStatement ps = connection.prepareStatement(query);
@@ -90,6 +96,7 @@ public class DatabaseHandler {
         ps.close();
         return isPending;
     }
+
     // New method to check if a resident is rejected
     public boolean isResidentRejected(String username, String password) throws SQLException {
         String query = "SELECT * FROM residents WHERE res_username = ? AND res_password = ? AND approval_status = 'REJECTED'";
@@ -121,8 +128,10 @@ public class DatabaseHandler {
         ps.close();
         return flatId;
     }
+
     public boolean addVisitor(Visitor visitor) throws SQLException {
-        String query = "INSERT INTO visitor (vis_id, name, phonenumber, purpose, entrytime, block_name, flat_number, approval_status) " +
+        String query = "INSERT INTO visitor (vis_id, name, phonenumber, purpose, entrytime, block_name, flat_number, approval_status) "
+                +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
@@ -184,8 +193,7 @@ public class DatabaseHandler {
                         rs.getTimestamp("exittime"),
                         rs.getString("block_name"),
                         rs.getString("flat_number"),
-                        rs.getString("Approval_status")
-                ));
+                        rs.getString("Approval_status")));
             }
 
             return visitors;
@@ -209,8 +217,7 @@ public class DatabaseHandler {
                         rs.getTimestamp("exittime"),
                         rs.getString("block_name"),
                         rs.getString("flat_number"),
-                        rs.getString("Approval_status")
-                ));
+                        rs.getString("Approval_status")));
             }
 
             return visitors;
@@ -236,8 +243,7 @@ public class DatabaseHandler {
                         rs.getTimestamp("entrytime"),
                         rs.getString("block_name"),
                         rs.getString("flat_number"),
-                        rs.getString("Approval_status")
-                ));
+                        rs.getString("Approval_status")));
             }
 
             return visitors;
@@ -263,8 +269,7 @@ public class DatabaseHandler {
             flat = new Flat(
                     rs.getString("flat_id"),
                     rs.getString("block_name"),
-                    rs.getString("flat_number")
-            );
+                    rs.getString("flat_number"));
         }
 
         rs.close();
@@ -289,8 +294,7 @@ public class DatabaseHandler {
                         rs.getTimestamp("exittime"),
                         rs.getString("block_name"),
                         rs.getString("flat_number"),
-                        rs.getString("Approval_status")
-                );
+                        rs.getString("Approval_status"));
             }
             return null;
         }
@@ -307,8 +311,7 @@ public class DatabaseHandler {
             flats.add(new Flat(
                     rs.getString("flat_id"),
                     rs.getString("block_name"),
-                    rs.getString("flat_number")
-            ));
+                    rs.getString("flat_number")));
         }
 
         rs.close();
@@ -347,8 +350,7 @@ public class DatabaseHandler {
                     rs.getString("res_email"),
                     rs.getString("ownership_status"),
                     rs.getString("phonenumber"),
-                    rs.getString("Approval_status")
-            );
+                    rs.getString("Approval_status"));
         }
 
         rs.close();
@@ -370,14 +372,14 @@ public class DatabaseHandler {
                     rs.getString("name"),
                     rs.getString("Ad_username"),
                     rs.getString("Ad_password"),
-                    rs.getString("Ad_email")
-            );
+                    rs.getString("Ad_email"));
         }
 
         rs.close();
         ps.close();
         return admin;
     }
+
     public List<Resident> getPendingResidents() throws SQLException {
         String query = "SELECT * FROM residents WHERE Approval_status = 'PENDING'";
         Statement stmt = connection.createStatement();
@@ -394,9 +396,8 @@ public class DatabaseHandler {
                     rs.getString("res_email"),
                     rs.getString("ownership_status"),
                     rs.getString("phonenumber"),
-                    rs.getString("approval_status")
-            ));
-            System.out.println("res_id : "+rs.getString("res_id")) ;
+                    rs.getString("approval_status")));
+            System.out.println("res_id : " + rs.getString("res_id"));
 
         }
 
@@ -404,6 +405,7 @@ public class DatabaseHandler {
         stmt.close();
         return pendingResidents;
     }
+
     public boolean resubmitResidentApplication(String residentId) throws SQLException {
         String query = "UPDATE residents SET approval_status = 'PENDING' WHERE res_id = ?";
         PreparedStatement ps = connection.prepareStatement(query);
@@ -413,6 +415,7 @@ public class DatabaseHandler {
         ps.close();
         return result > 0;
     }
+
     public boolean approveResident(String residentId) throws SQLException {
         String query = "UPDATE residents SET approval_status = 'APPROVED' WHERE res_id = ?";
         PreparedStatement ps = connection.prepareStatement(query);
@@ -422,6 +425,7 @@ public class DatabaseHandler {
         ps.close();
         return result > 0;
     }
+
     public boolean rejectResident(String residentId) throws SQLException {
         String query = "UPDATE residents SET approval_status = 'REJECTED' WHERE res_id = ?";
         PreparedStatement ps = connection.prepareStatement(query);
@@ -441,6 +445,7 @@ public class DatabaseHandler {
             e.printStackTrace();
         }
     }
+
     private String encryptPassword(String password) {
         // Use a proper password hashing algorithm like BCrypt
         // For simplicity, using a basic hash here (NOT recommended for production)
@@ -452,5 +457,149 @@ public class DatabaseHandler {
             e.printStackTrace();
             return password; // Not secure, only for demonstration
         }
+    }
+
+    public boolean registerComplaint(String residentId, String subject, String description) throws SQLException {
+        String complaintId = generateComplaintId();
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        String status = "PENDING";
+
+        String query = "INSERT INTO complaints (complaint_id, resident_id, subject, description, date_time, status) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, complaintId);
+            ps.setString(2, residentId);
+            ps.setString(3, subject);
+            ps.setString(4, description);
+            ps.setTimestamp(5, currentTime);
+            ps.setString(6, status);
+
+            int result = ps.executeUpdate();
+            return result > 0;
+        }
+    }
+
+    private String generateComplaintId() throws SQLException {
+        // Get the count of complaints to generate a new ID
+        String query = "SELECT COUNT(*) as count FROM complaints";
+        try (Statement stmt = connection.createStatement()) {
+            ResultSet rs = stmt.executeQuery(query);
+            if (rs.next()) {
+                int count = rs.getInt("count") + 1;
+                return "COMP" + String.format("%04d", count);
+            }
+            return "COMP0001";
+        }
+    }
+
+    public boolean resolveComplaint(String complaintId) throws SQLException {
+        String query = "UPDATE complaints SET status = 'RESOLVED' WHERE complaint_id = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, complaintId);
+            int result = ps.executeUpdate();
+            return result > 0;
+        }
+    }
+
+    public List<Map<String, Object>> getComplaintsByResident(String residentId) throws SQLException {
+        String query = "SELECT c.*, r.name as resident_name, f.block_name, f.flat_number " +
+                "FROM complaints c " +
+                "JOIN residents r ON c.resident_id = r.res_id " +
+                "JOIN resident_in_flat rf ON r.res_id = rf.res_id " +
+                "JOIN flats f ON rf.flat_id = f.flat_id " +
+                "WHERE c.resident_id = ? " +
+                "ORDER BY c.date_time DESC";
+
+        List<Map<String, Object>> complaints = new ArrayList<>();
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, residentId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Map<String, Object> complaint = new HashMap<>();
+                complaint.put("complaintId", rs.getString("complaint_id"));
+                complaint.put("residentId", rs.getString("resident_id"));
+                complaint.put("residentName", rs.getString("resident_name"));
+                complaint.put("subject", rs.getString("subject"));
+                complaint.put("description", rs.getString("description"));
+                complaint.put("dateTime", rs.getTimestamp("date_time"));
+                complaint.put("status", rs.getString("status"));
+                complaint.put("blockName", rs.getString("block_name"));
+                complaint.put("flatNumber", rs.getString("flat_number"));
+
+                complaints.add(complaint);
+            }
+        }
+
+        return complaints;
+    }
+
+    public List<Map<String, Object>> getAllComplaints() throws SQLException {
+        String query = "SELECT c.*, r.name as resident_name, f.block_name, f.flat_number " +
+                "FROM complaints c " +
+                "JOIN residents r ON c.resident_id = r.res_id " +
+                "JOIN resident_in_flat rf ON r.res_id = rf.res_id " +
+                "JOIN flats f ON rf.flat_id = f.flat_id " +
+                "ORDER BY c.date_time DESC";
+
+        List<Map<String, Object>> complaints = new ArrayList<>();
+
+        try (Statement stmt = connection.createStatement()) {
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                Map<String, Object> complaint = new HashMap<>();
+                complaint.put("complaintId", rs.getString("complaint_id"));
+                complaint.put("residentId", rs.getString("resident_id"));
+                complaint.put("residentName", rs.getString("resident_name"));
+                complaint.put("subject", rs.getString("subject"));
+                complaint.put("description", rs.getString("description"));
+                complaint.put("dateTime", rs.getTimestamp("date_time"));
+                complaint.put("status", rs.getString("status"));
+                complaint.put("blockName", rs.getString("block_name"));
+                complaint.put("flatNumber", rs.getString("flat_number"));
+
+                complaints.add(complaint);
+            }
+        }
+
+        return complaints;
+    }
+
+    public List<Map<String, Object>> getComplaintsByStatus(String status) throws SQLException {
+        String query = "SELECT c.*, r.name as resident_name, f.block_name, f.flat_number " +
+                "FROM complaints c " +
+                "JOIN residents r ON c.resident_id = r.res_id " +
+                "JOIN resident_in_flat rf ON r.res_id = rf.res_id " +
+                "JOIN flats f ON rf.flat_id = f.flat_id " +
+                "WHERE c.status = ? " +
+                "ORDER BY c.date_time DESC";
+
+        List<Map<String, Object>> complaints = new ArrayList<>();
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, status);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Map<String, Object> complaint = new HashMap<>();
+                complaint.put("complaintId", rs.getString("complaint_id"));
+                complaint.put("residentId", rs.getString("resident_id"));
+                complaint.put("residentName", rs.getString("resident_name"));
+                complaint.put("subject", rs.getString("subject"));
+                complaint.put("description", rs.getString("description"));
+                complaint.put("dateTime", rs.getTimestamp("date_time"));
+                complaint.put("status", rs.getString("status"));
+                complaint.put("blockName", rs.getString("block_name"));
+                complaint.put("flatNumber", rs.getString("flat_number"));
+
+                complaints.add(complaint);
+            }
+        }
+
+        return complaints;
     }
 }
