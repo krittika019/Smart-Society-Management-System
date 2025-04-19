@@ -1,6 +1,7 @@
 package com.ssms.smartsocietymanagement.controller;
 
 import com.ssms.smartsocietymanagement.model.Admin;
+import com.ssms.smartsocietymanagement.model.Flat;
 import com.ssms.smartsocietymanagement.model.Resident;
 import com.ssms.smartsocietymanagement.util.DatabaseHandler;
 import javafx.fxml.FXML;
@@ -8,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.event.ActionEvent;
@@ -132,40 +134,46 @@ public class DashboardController {
     @FXML
     private void handleVisitorsButton(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ssms/smartsocietymanagement/view/VisitorManagement.fxml"));
-            Pane visitorPane = loader.load();
-
-            VisitorManagementController controller = loader.getController();
             if (userType.equals("resident")) {
-                controller.initResidentData(currentResident, flatId);
-            } else {
-                controller.initAdminData(currentAdmin);
-            }
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ssms/smartsocietymanagement/view/ResidentVisitorsView.fxml"));
+                Pane visitorsPane = loader.load();
 
-            mainContentPane.setCenter(visitorPane);
-        } catch (IOException e) {
+                ResidentVisitorsController controller = loader.getController();
+
+                // Get the resident's flat information
+                DatabaseHandler dbHandler = new DatabaseHandler();
+                Flat residentFlat = dbHandler.getFlatByResidentId(currentResident.getId());
+                dbHandler.closeConnection();
+
+                if (residentFlat != null) {
+                    controller.initData(currentResident, residentFlat.getBlock_name(), residentFlat.getFlat_number());
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Error", "Could not find flat information for this resident.");
+                    return;
+                }
+
+                mainContentPane.setCenter(visitorsPane);
+            } else {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ssms/smartsocietymanagement/view/AdminVisitorsView.fxml"));
+                Pane visitorsPane = loader.load();
+
+                AdminVisitorsController controller = loader.getController();
+                controller.initData(currentAdmin);
+
+                mainContentPane.setCenter(visitorsPane);
+            }
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load visitors view: " + e.getMessage());
         }
     }
-
-//    @FXML
-//    private void handleBillsButton(ActionEvent event) {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ssms/smartsocietymanagement/view/BillManagement.fxml"));
-//            Pane billPane = loader.load();
-//
-//            BillManagementController controller = loader.getController();
-//            if (userType.equals("resident")) {
-//                controller.initResidentData(currentResident, flatId);
-//            } else {
-//                controller.initAdminData(currentAdmin);
-//            }
-//
-//            mainContentPane.setCenter(billPane);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
     @FXML
     private void handleProfileButton(ActionEvent event) {

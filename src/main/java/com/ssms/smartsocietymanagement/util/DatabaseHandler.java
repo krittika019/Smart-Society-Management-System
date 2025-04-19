@@ -121,6 +121,180 @@ public class DatabaseHandler {
         ps.close();
         return flatId;
     }
+    public boolean addVisitor(Visitor visitor) throws SQLException {
+        String query = "INSERT INTO visitor (vis_id, name, phonenumber, purpose, entrytime, block_name, flat_number, approval_status) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, visitor.getId());
+            ps.setString(2, visitor.getName());
+            ps.setString(3, visitor.getMobileNumber());
+            ps.setString(4, visitor.getPurpose());
+            ps.setTimestamp(5, visitor.getEntryTime());
+            ps.setString(6, visitor.getBlock());
+            ps.setString(7, visitor.getFlatNumber());
+            ps.setString(8, visitor.getStatus());
+
+            int result = ps.executeUpdate();
+            return result > 0;
+        }
+    }
+
+    public boolean updateVisitorStatus(String visitorId, String status) throws SQLException {
+        String query = "UPDATE visitor SET Approval_status = ? WHERE vis_id = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, status);
+            ps.setString(2, visitorId);
+
+            int result = ps.executeUpdate();
+            return result > 0;
+        }
+    }
+
+    public boolean updateVisitorExitTime(String visitorId, Timestamp exitTime) throws SQLException {
+        String query = "UPDATE visitor SET exittime = ? WHERE vis_id = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setTimestamp(1, exitTime);
+            ps.setString(2, visitorId);
+
+            int result = ps.executeUpdate();
+            return result > 0;
+        }
+    }
+
+    public List<Visitor> getVisitorsByFlat(String block, String flatNumber) throws SQLException {
+        String query = "SELECT * FROM visitor WHERE block_name = ? AND flat_number = ? ORDER BY entrytime DESC";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, block);
+            ps.setString(2, flatNumber);
+
+            ResultSet rs = ps.executeQuery();
+            List<Visitor> visitors = new ArrayList<>();
+
+            while (rs.next()) {
+                visitors.add(new Visitor(
+                        rs.getString("vis_id"),
+                        rs.getString("name"),
+                        rs.getString("phonenumber"),
+                        rs.getString("purpose"),
+                        rs.getTimestamp("entrytime"),
+                        rs.getTimestamp("exittime"),
+                        rs.getString("block_name"),
+                        rs.getString("flat_number"),
+                        rs.getString("Approval_status")
+                ));
+            }
+
+            return visitors;
+        }
+    }
+
+    public List<Visitor> getAllVisitors() throws SQLException {
+        String query = "SELECT * FROM visitor ORDER BY entrytime DESC";
+
+        try (Statement stmt = connection.createStatement()) {
+            ResultSet rs = stmt.executeQuery(query);
+            List<Visitor> visitors = new ArrayList<>();
+
+            while (rs.next()) {
+                visitors.add(new Visitor(
+                        rs.getString("vis_id"),
+                        rs.getString("name"),
+                        rs.getString("phonenumber"),
+                        rs.getString("purpose"),
+                        rs.getTimestamp("entrytime"),
+                        rs.getTimestamp("exittime"),
+                        rs.getString("block_name"),
+                        rs.getString("flat_number"),
+                        rs.getString("Approval_status")
+                ));
+            }
+
+            return visitors;
+        }
+    }
+
+    public List<Visitor> getPendingVisitorsByFlat(String block, String flatNumber) throws SQLException {
+        String query = "SELECT * FROM visitor WHERE block_name = ? AND flat_number = ? AND Approval_status = 'PENDING' ORDER BY entrytime DESC";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, block);
+            ps.setString(2, flatNumber);
+
+            ResultSet rs = ps.executeQuery();
+            List<Visitor> visitors = new ArrayList<>();
+
+            while (rs.next()) {
+                visitors.add(new Visitor(
+                        rs.getString("vis_id"),
+                        rs.getString("name"),
+                        rs.getString("phonenumber"),
+                        rs.getString("purpose"),
+                        rs.getTimestamp("entrytime"),
+                        rs.getString("block_name"),
+                        rs.getString("flat_number"),
+                        rs.getString("Approval_status")
+                ));
+            }
+
+            return visitors;
+        }
+    }
+
+    public Flat getFlatByResidentId(String residentId) throws SQLException {
+        // First get the flat_id
+        String flatId = getFlatIdByResidentId(residentId);
+        if (flatId == null) {
+            return null;
+        }
+
+        // Then get the flat details
+        String query = "SELECT * FROM flats WHERE flat_id = ?";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setString(1, flatId);
+
+        ResultSet rs = ps.executeQuery();
+        Flat flat = null;
+
+        if (rs.next()) {
+            flat = new Flat(
+                    rs.getString("flat_id"),
+                    rs.getString("block_name"),
+                    rs.getString("flat_number")
+            );
+        }
+
+        rs.close();
+        ps.close();
+        return flat;
+    }
+
+    public Visitor getVisitorById(String visitorId) throws SQLException {
+        String query = "SELECT * FROM visitor WHERE vis_id = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, visitorId);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Visitor(
+                        rs.getString("vis_id"),
+                        rs.getString("name"),
+                        rs.getString("Phonenumber"),
+                        rs.getString("purpose"),
+                        rs.getTimestamp("entrytime"),
+                        rs.getTimestamp("exittime"),
+                        rs.getString("block_name"),
+                        rs.getString("flat_number"),
+                        rs.getString("Approval_status")
+                );
+            }
+            return null;
+        }
+    }
 
     public List<Flat> getAllFlats() throws SQLException {
         String query = "SELECT * FROM flats ORDER BY block_name, flat_number";
