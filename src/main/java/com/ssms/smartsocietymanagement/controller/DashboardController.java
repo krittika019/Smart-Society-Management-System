@@ -4,6 +4,7 @@ import com.ssms.smartsocietymanagement.model.Admin;
 import com.ssms.smartsocietymanagement.model.Flat;
 import com.ssms.smartsocietymanagement.model.Resident;
 import com.ssms.smartsocietymanagement.util.DatabaseHandler;
+import com.ssms.smartsocietymanagement.util.SessionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -113,11 +114,6 @@ public class DashboardController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    @FXML
-    private void handleNoticesButton(ActionEvent event) {
-        loadContentPane("/fxml/NoticesView.fxml");
     }
 
     @FXML
@@ -243,5 +239,39 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
+
+    // Add this method to your DashboardController.java class
+
+    @FXML
+    private void handleNoticesButton(ActionEvent event) {
+        try {
+            if (userType.equals("resident")) {
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/com/ssms/smartsocietymanagement/view/ResidentNoticesView.fxml"));
+                Pane noticesPane = loader.load();
+
+                ResidentNoticesController controller = loader.getController();
+                controller.initData(currentResident);
+
+                mainContentPane.setCenter(noticesPane);
+            } else {
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/com/ssms/smartsocietymanagement/view/AdminNoticesView.fxml"));
+                Pane noticesPane = loader.load();
+
+                AdminNoticesController controller = loader.getController();
+                controller.initData(currentAdmin);
+
+                mainContentPane.setCenter(noticesPane);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load notices view: " + e.getMessage());
+        }
+    }
+
+// Replace your existing handleNoticesButton method with this one
+
+
 
 }

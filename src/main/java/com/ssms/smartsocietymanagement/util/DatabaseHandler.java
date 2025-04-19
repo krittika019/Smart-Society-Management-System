@@ -16,9 +16,9 @@ public class DatabaseHandler {
     private Connection connection;
     private static final String DB_URL = "jdbc:mysql://localhost:3306/ssms";
     private static final String USER = "root";
-    // private static final String PASSWORD = "Krittika1929!";
 
-    private static final String PASSWORD = "Kritika@2004"; // kritika nair
+    private static final String PASSWORD = "Pkg@121616";
+
 
     public DatabaseHandler() {
         try {
@@ -436,6 +436,71 @@ public class DatabaseHandler {
         return result > 0;
     }
 
+    // Add these methods to your DatabaseHandler.java class
+
+    public String generateNoticeId() {
+        // Get the count of notices to generate a new ID
+        long timestamp = System.currentTimeMillis();
+        int random = (int)(Math.random() * 1000);
+        return "NOC" + timestamp + random;
+
+    }
+
+    public boolean createNotice(String title, String description, String adminId) throws SQLException {
+        String noticeId = generateNoticeId();
+
+        String query = "INSERT INTO notices (notice_id, notice_title, created_date, description, created_by) " +
+                "VALUES (?, ?, CURRENT_DATE, ?, ?)";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, noticeId);
+            ps.setString(2, title);
+            ps.setString(3, description);
+            ps.setString(4, adminId);
+
+            int result = ps.executeUpdate();
+            return result > 0;
+        }
+    }
+
+    public List<Notice> getAllNotices() throws SQLException {
+        String query = "SELECT n.*, a.name as admin_name " +
+                "FROM notices n " +
+                "JOIN admins a ON n.created_by = a.ad_id " +
+                "ORDER BY n.created_date DESC";
+
+        List<Notice> notices = new ArrayList<>();
+
+        try (Statement stmt = connection.createStatement()) {
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                Notice notice = new Notice(
+                        rs.getString("notice_id"),
+                        rs.getString("notice_title"),
+                        rs.getDate("created_date"),
+                        rs.getString("description"),
+                        rs.getString("created_by"),
+                        rs.getString("admin_name")
+                );
+                notices.add(notice);
+            }
+        }
+
+        return notices;
+    }
+
+    public boolean deleteNotice(String noticeId) throws SQLException {
+        String query = "DELETE FROM notices WHERE notice_id = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, noticeId);
+
+            int result = ps.executeUpdate();
+            return result > 0;
+        }
+    }
+
     public void closeConnection() {
         try {
             if (connection != null && !connection.isClosed()) {
@@ -480,17 +545,11 @@ public class DatabaseHandler {
         }
     }
 
-    private String generateComplaintId() throws SQLException {
+    private String generateComplaintId()  {
         // Get the count of complaints to generate a new ID
-        String query = "SELECT COUNT(*) as count FROM complaints";
-        try (Statement stmt = connection.createStatement()) {
-            ResultSet rs = stmt.executeQuery(query);
-            if (rs.next()) {
-                int count = rs.getInt("count") + 1;
-                return "COMP" + String.format("%04d", count);
-            }
-            return "COMP0001";
-        }
+        long timestamp = System.currentTimeMillis();
+        int random = (int)(Math.random() * 1000);
+        return "CON" + timestamp + random;
     }
 
     public boolean resolveComplaint(String complaintId) throws SQLException {
