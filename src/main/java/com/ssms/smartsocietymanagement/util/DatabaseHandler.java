@@ -17,7 +17,8 @@ public class DatabaseHandler {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/ssms";
     private static final String USER = "root";
 
-    private static final String PASSWORD = "Pkg@121616";
+    // private static final String PASSWORD = "Pkg@121616";
+    private static final String PASSWORD = "Kritika@2004";
 
 
     public DatabaseHandler() {
