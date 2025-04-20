@@ -862,5 +862,62 @@ public List<Map<String, Object>> filterBillsByFlat(String blockName, String flat
     return bills;
 }
 
+public String generateAmenityId() {
+    // Generate a unique ID for new amenities
+    long timestamp = System.currentTimeMillis();
+    int random = (int)(Math.random() * 1000);
+    return "AMN" + timestamp + random;
+}
+
+public boolean addAmenity(String name, String description, String location, 
+                        String openingHours, String status, String adminId) throws SQLException {
+    String amenityId = generateAmenityId();
+    
+    String query = "INSERT INTO amenities (amenity_id, name, description, location, opening_hours, status, created_by, created_date) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_DATE)";
+    
+    try (PreparedStatement ps = connection.prepareStatement(query)) {
+        ps.setString(1, amenityId);
+        ps.setString(2, name);
+        ps.setString(3, description);
+        ps.setString(4, location);
+        ps.setString(5, openingHours);
+        ps.setString(6, status);
+        ps.setString(7, adminId);
+        
+        int result = ps.executeUpdate();
+        return result > 0;
+    }
+}
+
+public List<Amenity> getAllAmenities() throws SQLException {
+    String query = "SELECT a.*, adm.name as admin_name " +
+                "FROM amenities a " +
+                "JOIN admins adm ON a.created_by = adm.ad_id " +
+                "ORDER BY a.created_date DESC";
+    
+    List<Amenity> amenities = new ArrayList<>();
+    
+    try (Statement stmt = connection.createStatement()) {
+        ResultSet rs = stmt.executeQuery(query);
+        
+        while (rs.next()) {
+            Amenity amenity = new Amenity(
+                rs.getString("amenity_id"),
+                rs.getString("name"),
+                rs.getString("description"),
+                rs.getString("location"),
+                rs.getString("opening_hours"),
+                rs.getString("status"),
+                rs.getString("created_by"),
+                rs.getDate("created_date"),
+                rs.getString("admin_name")
+            );
+            amenities.add(amenity);
+        }
+    }
+    
+    return amenities;
+}
 
 }

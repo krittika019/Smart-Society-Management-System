@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+
+<DialogPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+           fx:controller="com.ssms.smartsocietymanagement.controller.AddEditAmenityController">
+    <content>
+        <GridPane hgap="10" vgap="10">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            
+            <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            
+            <Label text="Description:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextArea fx:id="descriptionField" prefHeight="80" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            
+            <Label text="Location:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <TextField fx:id="locationField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            
+            <Label text="Opening Hours:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <TextField fx:id="hoursField" GridPane.columnIndex="1" GridPane.rowIndex="3" promptText="e.g. 9:00 AM - 6:00 PM" />
+            
+            <Label text="Status:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+            <ComboBox fx:id="statusComboBox" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        </GridPane>
+    </content>
+    <buttonTypes>
+        <ButtonType fx:constant="SAVE" />
+        <ButtonType fx:constant="CANCEL" />
+    </buttonTypes>
+</DialogPane>

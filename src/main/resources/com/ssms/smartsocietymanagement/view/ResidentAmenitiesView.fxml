@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<VBox spacing="15.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.ssms.smartsocietymanagement.controller.ResidentAmenitiesController" styleClass="content-pane">
+    <padding>
+        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0" />
+    </padding>
+    
+    <Label text="Society Amenities" styleClass="section-header" />
+    
+    <TableView fx:id="amenitiesTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="nameColumn" text="Name" prefWidth="100" />
+            <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="200" />
+            <TableColumn fx:id="locationColumn" text="Location" prefWidth="100" />
+            <TableColumn fx:id="hoursColumn" text="Opening Hours" prefWidth="120" />
+            <TableColumn fx:id="statusColumn" text="Status" prefWidth="80" />
+            <TableColumn fx:id="createdByColumn" text="Added By" prefWidth="100" />
+            <TableColumn fx:id="createdDateColumn" text="Date Added" prefWidth="100" />
+        </columns>
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+        </columnResizePolicy>
+    </TableView>
+</VBox>

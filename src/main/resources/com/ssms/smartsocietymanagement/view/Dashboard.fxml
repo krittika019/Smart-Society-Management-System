@@ -40,7 +40,7 @@
                 <Button onAction="#handleDashboardButton" text="Dashboard" styleClass="menu-button" maxWidth="Infinity"/>
                 <Button onAction="#handleNoticesButton" text="Notices" styleClass="menu-button" maxWidth="Infinity" />
                 <Button onAction="#handleComplaintsButton" text="Complaints" styleClass="menu-button" maxWidth="Infinity" />
-                <Button onAction="#handleBillsButton" text="Payments" styleClass="menu-button" maxWidth="Infinity" />
+                <!-- <Button onAction="#handleBillsButton" text="Payments" styleClass="menu-button" maxWidth="Infinity" /> -->
                 <Button fx:id="visitorsButton" onAction="#handleVisitorsButton" text="Visitor Management" styleClass="menu-button" maxWidth="Infinity" />
                 <Button fx:id="billsButton" onAction="#handleBillsButton" text="Bill Management" styleClass="menu-button" maxWidth="Infinity" />
                 <Button onAction="#handleAmenitiesButton" text="Amenities" styleClass="menu-button" maxWidth="Infinity" />

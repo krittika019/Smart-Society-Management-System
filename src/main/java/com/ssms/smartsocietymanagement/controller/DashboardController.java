@@ -189,9 +189,34 @@ private void handleBillsButton(ActionEvent event) {
     // }
 
     @FXML
-    private void handleAmenitiesButton(ActionEvent event) {
-        loadContentPane("/fxml/AmenitiesView.fxml");
+private void handleAmenitiesButton(ActionEvent event) {
+    try {
+        if (userType.equals("resident")) {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/ssms/smartsocietymanagement/view/ResidentAmenitiesView.fxml"));
+            Pane amenitiesPane = loader.load();
+
+            ResidentAmenitiesController controller = loader.getController();
+            controller.initData(currentResident);
+
+            mainContentPane.setCenter(amenitiesPane);
+        } else {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/ssms/smartsocietymanagement/view/AdminAmenitiesView.fxml"));
+            Pane amenitiesPane = loader.load();
+
+            AdminAmenitiesController controller = loader.getController();
+            controller.initData(currentAdmin);
+
+            mainContentPane.setCenter(amenitiesPane);
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        showAlert(Alert.AlertType.ERROR, "Error", "Failed to load amenities view: " + e.getMessage());
     }
+}
+
+
 
     @FXML
     private void handleVisitorsButton(ActionEvent event) {
