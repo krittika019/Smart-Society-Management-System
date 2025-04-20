@@ -54,4 +54,10 @@ public class Admin {
     public void setAd_email(String ad_email) {
         Ad_email = ad_email;
     }
+
+    public String getID(){ return Ad_id; }
+
+    public String getUsername(){ return Ad_username; }
+
+    public String getId() {  return Ad_id; }
 }
