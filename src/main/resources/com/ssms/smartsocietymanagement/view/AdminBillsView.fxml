@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="com.ssms.smartsocietymanagement.controller.AdminBillsController"
+            styleClass="content-pane">
+    <children>
+        <VBox spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" 
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="20.0">
+                    <children>
+                        <Label text="Bill Management" styleClass="section-header">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                            <Label text="Filter by Block:" />
+                            <ComboBox fx:id="blockComboBox" prefWidth="80.0" />
+                            <Label text="Flat:" />
+                            <ComboBox fx:id="flatComboBox" prefWidth="80.0" />
+                            <Label text="Month:" />
+                            <ComboBox fx:id="monthComboBox" prefWidth="100.0" />
+                            <Label text="Year:" />
+                            <ComboBox fx:id="yearComboBox" prefWidth="100.0" />
+                            <Button text="Apply Filter" onAction="#handleFilterButton" styleClass="button-primary" />
+                            <Button text="Reset Filter" onAction="#handleResetFilterButton" styleClass="button-secondary" />
+                        </HBox>
+                    </children>
+                </HBox>
+                
+                <TitledPane text="Create New Bill" expanded="false" styleClass="titled-pane">
+                    <content>
+                        <GridPane vgap="10.0" hgap="10.0">
+                            <padding>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </padding>
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <Label text="Block:" />
+                                <ComboBox fx:id="createBillBlockComboBox" GridPane.columnIndex="1" prefWidth="200.0" />
+                                <Label text="Flat Number:" GridPane.columnIndex="2" />
+                                <ComboBox fx:id="createBillFlatComboBox" GridPane.columnIndex="3" prefWidth="200.0" />
+                                
+                                <Label text="Bill Type:" GridPane.rowIndex="1" />
+                                <TextField fx:id="billTypeField" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="200.0" />
+                                <Label text="Amount (₹):" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                <TextField fx:id="amountTextField" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                
+                                <Label text="Due Date:" GridPane.rowIndex="2" />
+                                <DatePicker fx:id="dueDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="2" prefWidth="200.0" />
+                                <HBox alignment="CENTER_RIGHT" spacing="10.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                                    <Button text="Create Bill" onAction="#handleCreateBillButton" styleClass="button-primary" />
+                                    <Button text="Clear" onAction="#handleClearButton" styleClass="button-secondary" />
+                                </HBox>
+                            </children>
+                        </GridPane>
+                    </content>
+                </TitledPane>
+                
+                <TableView fx:id="billsTableView" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="idColumn" text="Bill ID" prefWidth="100.0" />
+                        <TableColumn fx:id="blockColumn" text="Block" prefWidth="60.0" />
+                        <TableColumn fx:id="flatNumberColumn" text="Flat No." prefWidth="80.0" />
+                        <TableColumn fx:id="billTypeColumn" text="Bill Type" prefWidth="120.0" />
+                        <TableColumn fx:id="amountColumn" text="Amount (₹)" prefWidth="100.0" />
+                        <TableColumn fx:id="dueDateColumn" text="Due Date" prefWidth="120.0" />
+                        <TableColumn fx:id="statusColumn" text="Status" prefWidth="80.0" />
+                        <TableColumn fx:id="paidDateColumn" text="Paid Date" prefWidth="120.0" />
+                        <TableColumn fx:id="actionColumn" text="Action" prefWidth="100.0" />
+                    </columns>
+                    <placeholder>
+                        <Label text="No bills available." />
+                    </placeholder>
+                </TableView>
+                
+                <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                    <Label fx:id="totalBillsLabel" text="Total Bills: 0" />
+                    <Label fx:id="pendingBillsLabel" text="Pending Bills: 0" />
+                    <Label fx:id="paidBillsLabel" text="Paid Bills: 0" />
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

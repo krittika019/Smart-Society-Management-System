@@ -1,7 +1,7 @@
 package com.ssms.smartsocietymanagement.model;
 
 import java.sql.Date;
-import java.time.LocalDate;
+
 
 public class Bill {
     private String id;
@@ -34,6 +34,7 @@ public class Bill {
         this.paidDate = paidDate;
         this.status = status;
     }
+
 
     // Getters and Setters
     public String getId() { return id; }

@@ -149,9 +149,48 @@ public class DashboardController {
     }
 
     @FXML
-    private void handlePaymentsButton(ActionEvent event) {
-        loadContentPane("/fxml/PaymentsView.fxml");
+private void handleBillsButton(ActionEvent event) {
+    try {
+        if (userType.equals("resident")) {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/ssms/smartsocietymanagement/view/ResidentBillsView.fxml"));
+            Pane billsPane = loader.load();
+
+            ResidentBillsController controller = loader.getController();
+            
+            // Get the resident's flat information
+            DatabaseHandler dbHandler = new DatabaseHandler();
+            Flat residentFlat = dbHandler.getFlatByResidentId(currentResident.getId());
+            dbHandler.closeConnection();
+
+            if (residentFlat != null) {
+                controller.initData(currentResident, residentFlat.getBlock_name(), residentFlat.getFlat_number());
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Error", "Could not find flat information for this resident.");
+                return;
+            }
+
+            mainContentPane.setCenter(billsPane);
+        } else {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/ssms/smartsocietymanagement/view/AdminBillsView.fxml"));
+            Pane billsPane = loader.load();
+
+            AdminBillsController controller = loader.getController();
+            controller.initData(currentAdmin);
+
+            mainContentPane.setCenter(billsPane);
+        }
+    } catch (IOException | SQLException e) {
+        e.printStackTrace();
+        showAlert(Alert.AlertType.ERROR, "Error", "Failed to load bills view: " + e.getMessage());
     }
+}
+
+    // @FXML
+    // private void handlePaymentsButton(ActionEvent event) {
+    //     loadContentPane("/fxml/PaymentsView.fxml");
+    // }
 
     @FXML
     private void handleAmenitiesButton(ActionEvent event) {
@@ -196,6 +235,7 @@ public class DashboardController {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to load visitors view: " + e.getMessage());
         }
     }
+
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);

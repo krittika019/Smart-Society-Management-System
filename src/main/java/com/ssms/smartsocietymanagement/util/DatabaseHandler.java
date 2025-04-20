@@ -602,4 +602,205 @@ public class DatabaseHandler {
 
         return complaints;
     }
+
+
+
+// Generate unique bill ID
+private String generateBillId() throws SQLException {
+    String query = "SELECT COUNT(*) as count FROM bill";
+    try (Statement stmt = connection.createStatement()) {
+        ResultSet rs = stmt.executeQuery(query);
+        if (rs.next()) {
+            int count = rs.getInt("count") + 1;
+            return "BILL" + String.format("%04d", count);
+        }
+        return "BILL0001";
+    }
+}
+
+// Create new bill by admin
+public boolean createBill(String blockName, String flatNumber, String billType,
+        double amount, Timestamp dueDate) throws SQLException {
+    String billId = generateBillId();
+    String status = "PENDING";
+
+    String query = "INSERT INTO bill (bill_id, block_name, flat_number, billtype, amount, duedate, approval_status) "
+            +
+            "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+    try (PreparedStatement ps = connection.prepareStatement(query)) {
+        ps.setString(1, billId);
+        ps.setString(2, blockName);
+        ps.setString(3, flatNumber);
+        ps.setString(4, billType);
+        ps.setDouble(5, amount);
+        ps.setTimestamp(6, dueDate);
+        ps.setString(7, status);
+
+        int result = ps.executeUpdate();
+        return result > 0;
+    }
+}
+
+// Update bill status to paid
+public boolean updateBillStatus(String billId, Timestamp paidDate) throws SQLException {
+    String query = "UPDATE bill SET approval_status = 'PAID', paidDate = ? WHERE bill_id = ?";
+
+    try (PreparedStatement ps = connection.prepareStatement(query)) {
+        ps.setTimestamp(1, paidDate);
+        ps.setString(2, billId);
+
+        int result = ps.executeUpdate();
+        return result > 0;
+    }
+}
+
+// Get bills for a specific flat
+public List<Map<String, Object>> getBillsByFlat(String blockName, String flatNumber) throws SQLException {
+    String query = "SELECT * FROM bill WHERE block_name = ? AND flat_number = ? ORDER BY duedate DESC";
+
+    List<Map<String, Object>> bills = new ArrayList<>();
+
+    try (PreparedStatement ps = connection.prepareStatement(query)) {
+        ps.setString(1, blockName);
+        ps.setString(2, flatNumber);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Map<String, Object> bill = new HashMap<>();
+            bill.put("billId", rs.getString("bill_id"));
+            bill.put("blockName", rs.getString("block_name"));
+            bill.put("flatNumber", rs.getString("flat_number"));
+            bill.put("billType", rs.getString("billtype"));
+            bill.put("amount", rs.getDouble("amount"));
+            bill.put("dueDate", rs.getTimestamp("duedate"));
+            bill.put("paidDate", rs.getTimestamp("paiddate"));
+            bill.put("status", rs.getString("approval_status"));
+
+            bills.add(bill);
+        }
+    }
+
+    return bills;
+}
+
+// Get all bills (for admin)
+public List<Map<String, Object>> getAllBills() throws SQLException {
+    String query = "SELECT * FROM bill ORDER BY duedate DESC";
+
+    List<Map<String, Object>> bills = new ArrayList<>();
+
+    try (Statement stmt = connection.createStatement()) {
+        ResultSet rs = stmt.executeQuery(query);
+
+        while (rs.next()) {
+            Map<String, Object> bill = new HashMap<>();
+            bill.put("id", rs.getString("bill_id"));
+            bill.put("block", rs.getString("block_name"));
+            bill.put("flatNumber", rs.getString("flat_number"));
+            bill.put("billType", rs.getString("billtype"));
+            bill.put("amount", rs.getDouble("amount"));
+            bill.put("dueDate", rs.getTimestamp("duedate"));
+            bill.put("paidDate", rs.getTimestamp("paiddate"));
+            bill.put("status", rs.getString("approval_status"));
+
+            bills.add(bill);
+        }
+    }
+
+    return bills;
+}
+
+// Filter bills by month and year
+public List<Map<String, Object>> filterBillsByDate(String blockName, String flatNumber,
+        int month, int year) throws SQLException {
+    String query = "SELECT * FROM bill WHERE block_name = ? AND flat_number = ? " +
+            "AND MONTH(duedate) = ? AND YEAR(duedate) = ? ORDER BY duedate DESC";
+
+    List<Map<String, Object>> bills = new ArrayList<>();
+
+    try (PreparedStatement ps = connection.prepareStatement(query)) {
+        ps.setString(1, blockName);
+        ps.setString(2, flatNumber);
+        ps.setInt(3, month);
+        ps.setInt(4, year);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Map<String, Object> bill = new HashMap<>();
+            bill.put("id", rs.getString("bill_id"));
+            bill.put("block", rs.getString("block_name"));
+            bill.put("flatNumber", rs.getString("flat_number"));
+            bill.put("billType", rs.getString("billtype"));
+            bill.put("amount", rs.getDouble("amount"));
+            bill.put("dueDate", rs.getTimestamp("duedate"));
+            bill.put("paidDate", rs.getTimestamp("paiddate"));
+            bill.put("status", rs.getString("approval_status"));
+
+            bills.add(bill);
+        }
+    }
+
+    return bills;
+}
+
+// Filter all bills by date (for admin)
+public List<Map<String, Object>> filterAllBillsByDate(int month, int year) throws SQLException {
+    String query = "SELECT * FROM bill WHERE MONTH(duedate) = ? AND YEAR(duedate) = ? ORDER BY duedate DESC";
+
+    List<Map<String, Object>> bills = new ArrayList<>();
+
+    try (PreparedStatement ps = connection.prepareStatement(query)) {
+        ps.setInt(1, month);
+        ps.setInt(2, year);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Map<String, Object> bill = new HashMap<>();
+            bill.put("id", rs.getString("bill_id"));
+            bill.put("block", rs.getString("block_name"));
+            bill.put("flatNumber", rs.getString("flat_number"));
+            bill.put("billType", rs.getString("billtype"));
+            bill.put("amount", rs.getDouble("amount"));
+            bill.put("dueDate", rs.getTimestamp("duedate"));
+            bill.put("paidDate", rs.getTimestamp("paiddate"));
+            bill.put("status", rs.getString("approval_status"));
+
+            bills.add(bill);
+        }
+    }
+
+    return bills;
+}
+
+// Filter bills by block and flat (for admin)
+public List<Map<String, Object>> filterBillsByFlat(String blockName, String flatNumber) throws SQLException {
+    String query = "SELECT * FROM bill WHERE block_name = ? AND flat_number = ? ORDER BY duedate DESC";
+
+    List<Map<String, Object>> bills = new ArrayList<>();
+
+    try (PreparedStatement ps = connection.prepareStatement(query)) {
+        ps.setString(1, blockName);
+        ps.setString(2, flatNumber);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Map<String, Object> bill = new HashMap<>();
+            bill.put("id", rs.getString("bill_id"));
+            bill.put("block", rs.getString("block_name"));
+            bill.put("flatNumber", rs.getString("flat_number"));
+            bill.put("billType", rs.getString("billtype"));
+            bill.put("amount", rs.getDouble("amount"));
+            bill.put("dueDate", rs.getTimestamp("duedate"));
+            bill.put("paidDate", rs.getTimestamp("paiddate"));
+            bill.put("status", rs.getString("approval_status"));
+
+            bills.add(bill);
+        }
+    }
+
+    return bills;
+}
+
+
 }
