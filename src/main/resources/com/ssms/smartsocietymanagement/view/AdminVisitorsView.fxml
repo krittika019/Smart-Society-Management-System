@@ -64,23 +64,20 @@
                         <content>
                             <VBox spacing="10.0">
                                 <HBox spacing="10.0" alignment="CENTER_LEFT">
-                                    <Label text="Filter:" />
-                                    <TextField fx:id="filterField" promptText="Search by name, block, flat or status" prefWidth="250.0" />
-                                    <Region HBox.hgrow="ALWAYS" />
                                     <Button fx:id="refreshBtn" text="Refresh" onAction="#handleRefresh" styleClass="btn-primary" />
                                 </HBox>
 
                                 <TableView fx:id="visitorsTable" VBox.vgrow="ALWAYS">
                                     <columns>
-                                        <TableColumn fx:id="idColumn" text="ID" visible="false" />
-                                        <TableColumn fx:id="nameColumn" text="Name" prefWidth="120.0" />
-                                        <TableColumn fx:id="mobileColumn" text="Mobile" prefWidth="100.0" />
-                                        <TableColumn fx:id="purposeColumn" text="Purpose" prefWidth="120.0" />
-                                        <TableColumn fx:id="blockColumn" text="Block" prefWidth="70.0" />
-                                        <TableColumn fx:id="flatNumberColumn" text="Flat No." prefWidth="70.0" />
-                                        <TableColumn fx:id="entryTimeColumn" text="Entry Time" prefWidth="150.0" />
-                                        <TableColumn fx:id="exitTimeColumn" text="Exit Time" prefWidth="150.0" />
-                                        <TableColumn fx:id="statusColumn" text="Status" prefWidth="100.0" />
+                                        <TableColumn fx:id="idColumn" text="Name" visible="false"/>
+                                        <TableColumn fx:id="nameColumn" text="Name" />
+                                        <TableColumn fx:id="mobileColumn" text="Mobile" />
+                                        <TableColumn fx:id="purposeColumn" text="Purpose" />
+                                        <TableColumn fx:id="blockColumn" text="Block" />
+                                        <TableColumn fx:id="flatNumberColumn" text="Flat No." />
+                                        <TableColumn fx:id="entryTimeColumn" text="Entry Time" />
+                                        <TableColumn fx:id="exitTimeColumn" text="Exit Time" />
+                                        <TableColumn fx:id="statusColumn" text="Status" />
                                     </columns>
                                 </TableView>
 

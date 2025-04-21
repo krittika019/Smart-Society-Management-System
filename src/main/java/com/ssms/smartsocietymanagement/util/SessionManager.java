@@ -4,42 +4,19 @@ import com.ssms.smartsocietymanagement.model.Admin;
 import com.ssms.smartsocietymanagement.model.Resident;
 
 public class SessionManager {
-    private static Object currentUser = null;
-    private static boolean isAdmin = false;
+    private static String currentUser;
+    private static String userType;
 
-    public static void setCurrentUser(Object user) {
+    public static void setCurrentUser(String user, String usertype) {
         currentUser = user;
-        isAdmin = (user instanceof Admin);
-    }
-
-    public static Object getCurrentUser() {
-        return currentUser;
-    }
-
-    public static boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public static String getCurrentUsername() {
-        if (currentUser instanceof Admin) {
-            return ((Admin) currentUser).getUsername();
-        } else if (currentUser instanceof Resident) {
-            return ((Resident) currentUser).getUsername();
-        }
-        return "User";
+        userType = usertype;
     }
 
     public static String getCurrentUserId() {
-        if (currentUser instanceof Admin) {
-            return ((Admin) currentUser).getId();
-        } else if (currentUser instanceof Resident) {
-            return ((Resident) currentUser).getId();
-        }
-        return null;
+        return currentUser;
+    }
+    public static String getCurrentUserType() {
+        return userType;
     }
 
-    public static void clearSession() {
-        currentUser = null;
-        isAdmin = false;
-    }
 }

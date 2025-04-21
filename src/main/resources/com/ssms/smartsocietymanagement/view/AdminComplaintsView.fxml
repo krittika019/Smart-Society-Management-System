@@ -44,12 +44,12 @@
                 
                 <TableView fx:id="complaintsTable" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="dateTimeColumn" text="Date &amp; Time" prefWidth="120" />
-                        <TableColumn fx:id="residentNameColumn" text="Resident" prefWidth="150" />
-                        <TableColumn fx:id="flatInfoColumn" text="Flat" prefWidth="100" />
-                        <TableColumn fx:id="subjectColumn" text="Subject" prefWidth="180" />
-                        <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="280" />
-                        <TableColumn fx:id="statusColumn" text="Status" prefWidth="100" />
+                        <TableColumn fx:id="dateTimeColumn" text="Date &amp; Time" />
+                        <TableColumn fx:id="residentNameColumn" text="Resident"/>
+                        <TableColumn fx:id="flatInfoColumn" text="Flat" />
+                        <TableColumn fx:id="subjectColumn" text="Subject" />
+                        <TableColumn fx:id="descriptionColumn" text="Description"/>
+                        <TableColumn fx:id="statusColumn" text="Status" />
                     </columns>
                     <placeholder>
                         <Label text="No complaints found" />

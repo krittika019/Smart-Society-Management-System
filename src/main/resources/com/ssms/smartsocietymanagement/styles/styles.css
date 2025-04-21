@@ -53,7 +53,9 @@
 .button-secondary {
     -fx-background-color: #95A5A6;
     -fx-text-fill: white;
-    -fx-padding: 8px 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-min-width: 100px;
 }
 
 .button-secondary:hover {
@@ -180,35 +182,6 @@
     -fx-padding: 20px;
 }
 
-/* Profile Styles */
-.profile-avatar {
-    -fx-background-color: white;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
-    -fx-background-radius: 5px;
-    -fx-padding: 15px;
-}
-
-.avatar-placeholder {
-    -fx-background-color: #ECF0F1;
-    -fx-background-radius: 75px;
-}
-
-.profile-details {
-    -fx-background-color: white;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
-    -fx-background-radius: 5px;
-    -fx-padding: 20px;
-}
-
-.profile-label {
-    -fx-text-fill: #7F8C8D;
-    -fx-font-weight: bold;
-}
-
-.profile-value {
-    -fx-text-fill: #2C3E50;
-}
-
 .login-panel {
     -fx-background-color: white;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
@@ -268,3 +241,111 @@
 .menu-button-admin:hover {
     -fx-background-color: #D35400;
 }
+
+/* General Styling */
+.root {
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+    -fx-background-color: #f5f7fa;
+}
+
+/* Page Title Styling */
+.page-title {
+    -fx-text-fill: #2c3e50;
+}
+
+.welcome-text {
+    -fx-text-fill: #7f8c8d;
+}
+
+/* Cards Styling */
+.summary-card {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    -fx-border-radius: 8px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+}
+
+.card-title {
+    -fx-text-fill: #7f8c8d;
+}
+
+.card-value {
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: bold;
+}
+
+.card-date {
+    -fx-text-fill: #95a5a6;
+}
+
+.card-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+    -fx-padding: 5px 15px;
+    -fx-font-size: 12px;
+}
+
+.card-button:hover {
+    -fx-background-color: #2980b9;
+}
+
+/* Content Panel Styling */
+.content-panel {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    -fx-border-radius: 8px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+}
+
+.section-title {
+    -fx-text-fill: #2c3e50;
+}
+
+.link-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #3498db;
+    -fx-cursor: hand;
+    -fx-underline: false;
+    -fx-padding: 5px 10px;
+}
+
+.link-button:hover {
+    -fx-text-fill: #2980b9;
+    -fx-underline: true;
+}
+
+/* Table Styling */
+.dashboard-table {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.dashboard-table .column-header {
+    -fx-background-color: #3498db;
+    -fx-border-color: #d3d3d3;
+    -fx-border-width: 0 0 1 0;
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: bold;
+}
+
+.dashboard-table .table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: #ecf0f1;
+    -fx-border-width: 0 0 1 0;
+    -fx-text-fill: #2c3e50;
+}
+
+.dashboard-table .table-row-cell:odd {
+    -fx-background-color: #f9f9f9;
+}
+
+.dashboard-table .table-row-cell:hover {
+    -fx-background-color: #ecf0f1;
+}
+

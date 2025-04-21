@@ -2,6 +2,7 @@ package com.ssms.smartsocietymanagement.controller;
 
 import com.ssms.smartsocietymanagement.model.Admin;
 import com.ssms.smartsocietymanagement.util.DatabaseHandler;
+import com.ssms.smartsocietymanagement.util.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,6 +40,7 @@ public class AdminLoginController {
         try {
             if (dbHandler.validateAdmin(username, password)) {
                 Admin admin = dbHandler.getAdminByUsername(username);
+                SessionManager.setCurrentUser(username, "admin");
                 navigateToDashboard(event, admin);
             } else {
                 showAlert(Alert.AlertType.ERROR, "Login Failed", "Invalid admin credentials");

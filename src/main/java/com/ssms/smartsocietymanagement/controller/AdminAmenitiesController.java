@@ -2,6 +2,7 @@ package com.ssms.smartsocietymanagement.controller;
 
 import com.ssms.smartsocietymanagement.model.Admin;
 import com.ssms.smartsocietymanagement.model.Amenity;
+import com.ssms.smartsocietymanagement.model.Resident;
 import com.ssms.smartsocietymanagement.util.DatabaseHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,6 +31,7 @@ public class AdminAmenitiesController implements Initializable {
     @FXML private TableColumn<Amenity, String> hoursColumn;
     @FXML private TableColumn<Amenity, String> statusColumn;
 
+
     private Admin currentAdmin;
     private ObservableList<Amenity> amenitiesList = FXCollections.observableArrayList();
 
@@ -45,7 +47,19 @@ public class AdminAmenitiesController implements Initializable {
         locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
         hoursColumn.setCellValueFactory(new PropertyValueFactory<>("openingHours"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-        
+
+        nameColumn.setPrefWidth(180);
+        descriptionColumn.setPrefWidth(120);
+        locationColumn.setPrefWidth(150);
+        hoursColumn.setPrefWidth(150);
+        statusColumn.setPrefWidth(120);
+
+        for (TableColumn<Amenity, ?> column : amenitiesTable.getColumns()) {
+            column.setStyle("-fx-alignment: CENTER; -fx-text-alignment: CENTER;");
+        }
+        // Set column resize policy
+        amenitiesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
         amenitiesTable.setItems(amenitiesList);
     }
 

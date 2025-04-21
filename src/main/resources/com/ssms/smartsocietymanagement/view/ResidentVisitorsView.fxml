@@ -7,7 +7,8 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.ssms.smartsocietymanagement.controller.ResidentVisitorsController"
-            styleClass="content-pane">
+            styleClass="content-pane"
+            stylesheets="@../styles/styles.css">
     <children>
         <VBox spacing="20.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
@@ -33,25 +34,22 @@
                                 </Label>
 
                                 <HBox spacing="10.0" alignment="CENTER_LEFT">
-                                    <Label text="Filter:" />
-                                    <TextField fx:id="pendingFilterField" promptText="Search by name or purpose" prefWidth="250.0" />
-                                    <Region HBox.hgrow="ALWAYS" />
                                     <Button fx:id="refreshPendingBtn" text="Refresh" onAction="#handleRefreshPending" styleClass="btn-primary" />
                                 </HBox>
 
                                 <TableView fx:id="pendingVisitorsTable" VBox.vgrow="ALWAYS">
                                     <columns>
-                                        <TableColumn fx:id="pendingIdColumn" text="ID" visible="false" />
-                                        <TableColumn fx:id="pendingNameColumn" text="Name" prefWidth="150.0" />
-                                        <TableColumn fx:id="pendingMobileColumn" text="Mobile" prefWidth="120.0" />
-                                        <TableColumn fx:id="pendingPurposeColumn" text="Purpose" prefWidth="150.0" />
-                                        <TableColumn fx:id="pendingEntryTimeColumn" text="Entry Time" prefWidth="150.0" />
+                                        <TableColumn fx:id="pendingIdColumn" text="ID" />
+                                        <TableColumn fx:id="pendingNameColumn" text="Name" />
+                                        <TableColumn fx:id="pendingMobileColumn" text="Mobile" />
+                                        <TableColumn fx:id="pendingPurposeColumn" text="Purpose" />
+                                        <TableColumn fx:id="pendingEntryTimeColumn" text="Entry Time" />
                                     </columns>
                                 </TableView>
 
                                 <HBox spacing="10.0" alignment="CENTER_RIGHT">
-                                    <Button fx:id="approveVisitorBtn" text="Approve Visitor" onAction="#handleApproveVisitor" styleClass="btn-success" />
-                                    <Button fx:id="rejectVisitorBtn" text="Reject Visitor" onAction="#handleRejectVisitor" styleClass="btn-danger" />
+                                    <Button fx:id="approveVisitorBtn" text="Approve Visitor" onAction="#handleApproveVisitor" styleClass="button-primary" />
+                                    <Button fx:id="rejectVisitorBtn" text="Reject Visitor" onAction="#handleRejectVisitor" styleClass="button-secondary"  />
                                 </HBox>
                             </VBox>
                         </content>
@@ -67,21 +65,18 @@
                                 </Label>
 
                                 <HBox spacing="10.0" alignment="CENTER_LEFT">
-                                    <Label text="Filter:" />
-                                    <TextField fx:id="historyFilterField" promptText="Search by name, purpose or status" prefWidth="250.0" />
-                                    <Region HBox.hgrow="ALWAYS" />
-                                    <Button fx:id="refreshHistoryBtn" text="Refresh" onAction="#handleRefreshHistory" styleClass="btn-primary" />
+                                    <Button fx:id="refreshHistoryBtn" text="Refresh" onAction="#handleRefreshHistory" styleClass="button-primary" />
                                 </HBox>
 
                                 <TableView fx:id="visitorHistoryTable" VBox.vgrow="ALWAYS">
                                     <columns>
                                         <TableColumn fx:id="historyIdColumn" text="ID" visible="false" />
-                                        <TableColumn fx:id="historyNameColumn" text="Name" prefWidth="120.0" />
-                                        <TableColumn fx:id="historyMobileColumn" text="Mobile" prefWidth="100.0" />
-                                        <TableColumn fx:id="historyPurposeColumn" text="Purpose" prefWidth="120.0" />
-                                        <TableColumn fx:id="historyEntryTimeColumn" text="Entry Time" prefWidth="150.0" />
-                                        <TableColumn fx:id="historyExitTimeColumn" text="Exit Time" prefWidth="150.0" />
-                                        <TableColumn fx:id="historyStatusColumn" text="Status" prefWidth="100.0" />
+                                        <TableColumn fx:id="historyNameColumn" text="Name"  />
+                                        <TableColumn fx:id="historyMobileColumn" text="Mobile"  />
+                                        <TableColumn fx:id="historyPurposeColumn" text="Purpose" />
+                                        <TableColumn fx:id="historyEntryTimeColumn" text="Entry Time"  />
+                                        <TableColumn fx:id="historyExitTimeColumn" text="Exit Time"  />
+                                        <TableColumn fx:id="historyStatusColumn" text="Status"  />
                                     </columns>
                                 </TableView>
                             </VBox>

@@ -3,6 +3,7 @@ package com.ssms.smartsocietymanagement.controller;
 import com.ssms.smartsocietymanagement.model.Admin;
 import com.ssms.smartsocietymanagement.model.Bill;
 import com.ssms.smartsocietymanagement.model.Flat;
+import com.ssms.smartsocietymanagement.model.Resident;
 import com.ssms.smartsocietymanagement.util.DatabaseHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -79,7 +80,7 @@ public class AdminBillsController {
     private Button clearFilterButton;
 
     @FXML
-    private TextField billTypeField;
+    private ComboBox<String> billTypeName;
 
     @FXML
     private TextField amountTextField;
@@ -92,9 +93,6 @@ public class AdminBillsController {
 
     @FXML
     private ComboBox<String> createBillFlatComboBox;
-
-    @FXML
-    private Button createBillButton;
 
     @FXML
     private Label totalBillsLabel;
@@ -111,7 +109,6 @@ public class AdminBillsController {
 
     private ObservableList<Bill> billsList = FXCollections.observableArrayList();
     private ObservableList<String> blocksList = FXCollections.observableArrayList();
-    private ObservableList<String> flatsList = FXCollections.observableArrayList();
 
     public void initData(Admin admin) {
         this.currentAdmin = admin;
@@ -213,6 +210,22 @@ public class AdminBillsController {
         dueDateColumn.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         paidDateColumn.setCellValueFactory(new PropertyValueFactory<>("paidDate"));
+
+        // Set preferred widths for columns
+        idColumn.setPrefWidth(120);
+        blockColumn.setPrefWidth(90);
+        flatNumberColumn.setPrefWidth(100);
+        billTypeColumn.setPrefWidth(140);
+        amountColumn.setPrefWidth(120);
+        dueDateColumn.setPrefWidth(120);
+        statusColumn.setPrefWidth(100);
+        paidDateColumn.setPrefWidth(120);
+
+        for (TableColumn<Bill, ?> column : billsTableView.getColumns()) {
+            column.setStyle("-fx-alignment: CENTER; -fx-text-alignment: CENTER;");
+        }
+        // Set column resize policy
+        billsTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         // Set custom cell factory to style the status column
         statusColumn.setCellFactory(new Callback<TableColumn<Bill, String>, TableCell<Bill, String>>() {
@@ -393,7 +406,7 @@ public void handleResetFilterButton(ActionEvent event) {
 
     @FXML
     private void handleCreateBillButton(ActionEvent event) {
-        String billType = billTypeField.getText().trim();
+        String billType = billTypeName.getValue();
         String amountText = amountTextField.getText().trim();
         LocalDate dueDate = dueDatePicker.getValue();
         String block = createBillBlockComboBox.getValue();
@@ -428,7 +441,7 @@ public void handleResetFilterButton(ActionEvent event) {
                 showAlert(Alert.AlertType.INFORMATION, "Success", "Bill created successfully!");
 
                 // Clear input fields
-                billTypeField.clear();
+                billTypeName.setValue(null);
                 amountTextField.clear();
                 dueDatePicker.setValue(null);
                 createBillBlockComboBox.setValue(null);
@@ -449,7 +462,7 @@ public void handleResetFilterButton(ActionEvent event) {
     @FXML
     private void handleClearButton(ActionEvent event) {
         // Clear input fields without reloading the entire view
-        billTypeField.clear();
+        billTypeName.setValue(null);
         amountTextField.clear();
         dueDatePicker.setValue(null);
         createBillBlockComboBox.setValue(null);

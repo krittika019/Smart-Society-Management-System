@@ -56,7 +56,19 @@ public class ResidentApprovalsController implements Initializable {
         ownershipstatusColumn.setCellValueFactory(new PropertyValueFactory<>("ownership_status"));
         phonenumberColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
 
+        // Set preferred widths for columns
+        idColumn.setPrefWidth(150);
+        nameColumn.setPrefWidth(120);
+        usernameColumn.setPrefWidth(120);
+        emailColumn.setPrefWidth(150);
+        ownershipstatusColumn.setPrefWidth(150);
+        phonenumberColumn.setPrefWidth(120);
 
+        for (TableColumn<Resident, ?> column : pendingResidentsTable.getColumns()) {
+            column.setStyle("-fx-alignment: CENTER; -fx-text-alignment: CENTER;");
+        }
+        // Set column resize policy
+        pendingResidentsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         // Load pending residents
         loadPendingResidents();
 

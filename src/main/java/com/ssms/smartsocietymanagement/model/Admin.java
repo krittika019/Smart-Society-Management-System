@@ -15,18 +15,14 @@ public class Admin {
         Ad_email = ad_email;
     }
 
-    public String getAd_id() {
-        return Ad_id;
-    }
-
-    public void setAd_id(String ad_id) {
+    public void setId(String ad_id) {
         Ad_id = ad_id;
     }
+    public String getId() {  return Ad_id; }
 
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -34,7 +30,6 @@ public class Admin {
     public String getAd_username() {
         return Ad_username;
     }
-
     public void setAd_username(String ad_username) {
         Ad_username = ad_username;
     }
@@ -42,22 +37,12 @@ public class Admin {
     public String getAd_password() {
         return Ad_password;
     }
-
     public void setAd_password(String ad_password) {
         Ad_password = ad_password;
     }
 
-    public String getAd_email() {
-        return Ad_email;
-    }
+    public String getAd_email() {return Ad_email;}
+    public void setAd_email(String ad_email) {Ad_email = ad_email;}
 
-    public void setAd_email(String ad_email) {
-        Ad_email = ad_email;
-    }
 
-    public String getID(){ return Ad_id; }
-
-    public String getUsername(){ return Ad_username; }
-
-    public String getId() {  return Ad_id; }
 }

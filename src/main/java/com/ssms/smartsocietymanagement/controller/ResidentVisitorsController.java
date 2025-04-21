@@ -38,18 +38,14 @@ public class ResidentVisitorsController implements Initializable {
     @FXML private TableColumn<Visitor, String> historyExitTimeColumn;
     @FXML private TableColumn<Visitor, String> historyStatusColumn;
 
-    @FXML private TextField pendingFilterField;
-    @FXML private TextField historyFilterField;
     @FXML private Button approveVisitorBtn;
     @FXML private Button rejectVisitorBtn;
     @FXML private Button refreshPendingBtn;
     @FXML private Button refreshHistoryBtn;
 
     private ObservableList<Visitor> pendingVisitors = FXCollections.observableArrayList();
-    private FilteredList<Visitor> filteredPendingVisitors;
 
     private ObservableList<Visitor> allVisitors = FXCollections.observableArrayList();
-    private FilteredList<Visitor> filteredAllVisitors;
 
     private Resident currentResident;
     private String flatBlock;
@@ -62,13 +58,6 @@ public class ResidentVisitorsController implements Initializable {
         setupPendingVisitorsTable();
         setupVisitorHistoryTable();
 
-        filteredPendingVisitors = new FilteredList<>(pendingVisitors, p -> true);
-        pendingVisitorsTable.setItems(filteredPendingVisitors);
-
-        filteredAllVisitors = new FilteredList<>(allVisitors, p -> true);
-        visitorHistoryTable.setItems(filteredAllVisitors);
-
-        setupFilters();
     }
 
     public void initData(Resident resident, String block, String flatNumber) {
@@ -89,6 +78,18 @@ public class ResidentVisitorsController implements Initializable {
             Timestamp timestamp = cellData.getValue().getEntryTime();
             return new SimpleStringProperty(timestamp != null ? dateFormat.format(timestamp) : "");
         });
+
+        pendingIdColumn.setPrefWidth(100);
+        pendingNameColumn.setPrefWidth(120);
+        pendingMobileColumn.setPrefWidth(140);
+        pendingPurposeColumn.setPrefWidth(180);
+        pendingEntryTimeColumn.setPrefWidth(110);
+
+        for (TableColumn<Visitor, ?> column : pendingVisitorsTable.getColumns()) {
+            column.setStyle("-fx-alignment: CENTER; -fx-text-alignment: CENTER;");
+        }
+        // Set column resize policy
+        pendingVisitorsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         pendingVisitorsTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             boolean hasSelection = newSelection != null;
@@ -114,47 +115,22 @@ public class ResidentVisitorsController implements Initializable {
             return new SimpleStringProperty(timestamp != null ? dateFormat.format(timestamp) : "-");
         });
         historyStatusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        historyIdColumn.setPrefWidth(100);
+        historyNameColumn.setPrefWidth(120);
+        historyMobileColumn.setPrefWidth(130);
+        historyPurposeColumn.setPrefWidth(170);
+        historyEntryTimeColumn.setPrefWidth(110);
+        historyExitTimeColumn.setPrefWidth(110);
+        historyStatusColumn.setPrefWidth(100);
+
+        for (TableColumn<Visitor, ?> column : pendingVisitorsTable.getColumns()) {
+            column.setStyle("-fx-alignment: CENTER; -fx-text-alignment: CENTER;");
+        }
+        // Set column resize policy
+        pendingVisitorsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
-    private void setupFilters() {
-        pendingFilterField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredPendingVisitors.setPredicate(visitor -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-
-                String lowerCaseFilter = newValue.toLowerCase();
-                if (visitor.getName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (visitor.getPurpose().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (visitor.getMobileNumber().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                }
-                return false;
-            });
-        });
-
-        historyFilterField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredAllVisitors.setPredicate(visitor -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-
-                String lowerCaseFilter = newValue.toLowerCase();
-                if (visitor.getName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (visitor.getPurpose().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (visitor.getMobileNumber().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (visitor.getStatus().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                }
-                return false;
-            });
-        });
-    }
 
     private void loadPendingVisitors() {
         try {

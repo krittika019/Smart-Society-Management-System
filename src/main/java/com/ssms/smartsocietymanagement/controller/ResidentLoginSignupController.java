@@ -3,6 +3,7 @@ package com.ssms.smartsocietymanagement.controller;
 import com.ssms.smartsocietymanagement.model.Flat;
 import com.ssms.smartsocietymanagement.model.Resident;
 import com.ssms.smartsocietymanagement.util.DatabaseHandler;
+import com.ssms.smartsocietymanagement.util.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -64,6 +65,7 @@ public class ResidentLoginSignupController {
             if (dbHandler.validateResident(username, password)) {
                 // User is approved, proceed to dashboard
                 Resident resident = dbHandler.getResidentByUsername(username);
+                SessionManager.setCurrentUser(username, "resident");
                 navigateToDashboard(event, resident, "resident");
             } else if (dbHandler.isResidentPendingApproval(username, password)) {
                 // User exists but is pending approval
@@ -116,20 +118,35 @@ public class ResidentLoginSignupController {
 
     @FXML
     private void handleSignup(ActionEvent event) {
-        String name = signupName.getText();
-        String username = signupUsername.getText();
-        String password = signupPassword.getText();
-        String email = signupEmail.getText();
+        String name = signupName.getText().trim();
+        String username = signupUsername.getText().trim();
+        String password = signupPassword.getText().trim();
+        String email = signupEmail.getText().trim();
         String ownership_status = signupOwnershipStatus.getValue();
         String blockname = signupBlockName.getValue() ;
         String flatnumber = signupFlatNumber.getValue() ;
-        String phone = signupPhone.getText();
+        String phone = signupPhone.getText().trim();
 
         if (name.isEmpty() || username.isEmpty() || password.isEmpty() ||
-                email.isEmpty() || ownership_status.isEmpty() || blockname.isEmpty() || flatnumber.isEmpty() || phone.isEmpty()) {
+                email.isEmpty() || ownership_status == null || blockname == null || flatnumber == null || phone.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Signup Error", "Please fill all fields");
             return;
         }
+
+        if(!validateUsername(username)){
+            showAlert(Alert.AlertType.ERROR, "Signup Error", "Please fill correct username");
+            return ;
+        }
+        if(!validateEmail(email)){
+            showAlert(Alert.AlertType.ERROR, "Signup Error", "Please fill correct email");
+            return ;
+        }
+        if(!validatePhonenumber(phone)){
+            showAlert(Alert.AlertType.ERROR, "Signup Error", "Please fill correct phonenumber");
+            return ;
+        }
+
+
         String res_id = generateResidentId() ;
         String flat_id = generateFlatId() ;
         Resident resident = new Resident(res_id, name, username, password, email, ownership_status, phone, "Pending");
@@ -196,5 +213,17 @@ public class ResidentLoginSignupController {
         int random = (int)(Math.random() * 1000);
         return "FA" + timestamp + random;
     }
+    private boolean validateEmail(String email) {
+        return email.matches("^[\\w.-]+@[\\w.-]+\\.com$");
+    }
+
+    private boolean validatePhonenumber(String phonenumber) {
+        return phonenumber.matches("\\d{10}");
+    }
+
+    private boolean validateUsername(String username) {
+        return username.matches("^[a-zA-Z][a-zA-Z0-9_]*$");
+    }
+
 
 }

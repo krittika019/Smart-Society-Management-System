@@ -20,14 +20,14 @@
             <Button onAction="#handleRefreshButton" text="Refresh" styleClass="button-secondary" />
         </HBox>
 
-        <TableView fx:id="pendingResidentsTable" prefHeight="400.0" prefWidth="800.0">
+        <TableView fx:id="pendingResidentsTable" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="idColumn" text="ID" prefWidth="50.0" />
-                <TableColumn fx:id="nameColumn" text="Name" prefWidth="150.0" />
-                <TableColumn fx:id="usernameColumn" text="Username" prefWidth="100.0" />
-                <TableColumn fx:id="emailColumn" text="Email" prefWidth="180.0" />
-                <TableColumn fx:id="ownershipstatusColumn" text="Ownership status" prefWidth="100.0" />
-                <TableColumn fx:id="phonenumberColumn" text="Phone number" prefWidth="150.0" />
+                <TableColumn fx:id="idColumn" text="ID" />
+                <TableColumn fx:id="nameColumn" text="Name"/>
+                <TableColumn fx:id="usernameColumn" text="Username"/>
+                <TableColumn fx:id="emailColumn" text="Email" />
+                <TableColumn fx:id="ownershipstatusColumn" text="Ownership status"  />
+                <TableColumn fx:id="phonenumberColumn" text="Phone number" />
             </columns>
         </TableView>
 

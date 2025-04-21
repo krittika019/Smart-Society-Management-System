@@ -30,12 +30,12 @@
             
             <TableView fx:id="billsTableView" VBox.vgrow="ALWAYS">
                 <columns>
-                    <TableColumn fx:id="idColumn" text="Bill ID" prefWidth="100" />
-                    <TableColumn fx:id="billTypeColumn" text="Bill Type" prefWidth="120" />
-                    <TableColumn fx:id="amountColumn" text="Amount (₹)" prefWidth="100" />
-                    <TableColumn fx:id="dueDateColumn" text="Due Date" prefWidth="100" />
-                    <TableColumn fx:id="statusColumn" text="Status" prefWidth="80" />
-                    <TableColumn fx:id="paidDateColumn" text="Paid Date" prefWidth="100" />
+                    <TableColumn fx:id="idColumn" text="Bill ID"/>
+                    <TableColumn fx:id="billTypeColumn" text="Bill Type"/>
+                    <TableColumn fx:id="amountColumn" text="Amount (₹)"/>
+                    <TableColumn fx:id="dueDateColumn" text="Due Date"/>
+                    <TableColumn fx:id="statusColumn" text="Status"/>
+                    <TableColumn fx:id="paidDateColumn" text="Paid Date"/>
                 </columns>
                 <columnResizePolicy>
                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

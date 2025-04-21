@@ -1,6 +1,7 @@
 package com.ssms.smartsocietymanagement.controller;
 
 import com.ssms.smartsocietymanagement.model.Resident;
+import com.ssms.smartsocietymanagement.model.Visitor;
 import com.ssms.smartsocietymanagement.util.DatabaseHandler;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -73,6 +74,17 @@ public class ResidentComplaintsController implements Initializable {
 
         statusColumn.setCellValueFactory(cellData -> 
                 new SimpleStringProperty((String) cellData.getValue().get("status")));
+
+        dateTimeColumn.setPrefWidth(100);
+        subjectColumn.setPrefWidth(160);
+        descriptionColumn.setPrefWidth(210);
+        statusColumn.setPrefWidth(100);
+
+        for (TableColumn<Map<String, Object>, ?> column : complaintsTable.getColumns()) {
+            column.setStyle("-fx-alignment: CENTER; -fx-text-alignment: CENTER;");
+        }
+        // Set column resize policy
+        complaintsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         // Style the status column
         statusColumn.setCellFactory(column -> new TableCell<Map<String, Object>, String>() {

@@ -17,8 +17,7 @@ public class DatabaseHandler {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/ssms";
     private static final String USER = "root";
 
-    // private static final String PASSWORD = "Pkg@121616";
-    private static final String PASSWORD = "Kritika@2004";
+    private static final String PASSWORD = "Krittika1929!";
 
 
     public DatabaseHandler() {
@@ -319,6 +318,7 @@ public class DatabaseHandler {
         stmt.close();
         return flats;
     }
+
 
     public boolean validateAdmin(String username, String password) throws SQLException {
         String query = "SELECT * FROM admins WHERE Ad_username = ? AND Ad_password = ?";

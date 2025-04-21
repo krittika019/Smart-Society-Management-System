@@ -267,26 +267,6 @@ private void handleAmenitiesButton(ActionEvent event) {
     }
 
     @FXML
-    private void handleProfileButton(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/ssms/smartsocietymanagement/view/ProfileView.fxml"));
-            Pane profilePane = loader.load();
-
-            ProfileViewController controller = loader.getController();
-            if (userType.equals("resident")) {
-                controller.initData(currentResident);
-            } else {
-                controller.initAdminData(currentAdmin);
-            }
-
-            mainContentPane.setCenter(profilePane);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
     private void handleLogoutButton(ActionEvent event) throws IOException {
         Parent root = FXMLLoader
                 .load(getClass().getResource("/com/ssms/smartsocietymanagement/view/UserTypeSelection.fxml"));

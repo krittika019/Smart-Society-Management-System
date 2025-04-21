@@ -6,116 +6,345 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.chart.*?>
 
-<VBox alignment="TOP_CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../styles/styles.css">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
+<StackPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ssms.smartsocietymanagement.controller.DashboardContentController" stylesheets="@../styles/styles.css">
     <children>
-        <Label text="Dashboard Overview" styleClass="page-title">
-            <font>
-                <Font name="System Bold" size="24.0" />
-            </font>
-        </Label>
-
-        <HBox spacing="20.0" alignment="CENTER">
+        <!-- Resident Dashboard View -->
+        <VBox fx:id="residentDashboard" alignment="TOP_CENTER" spacing="20.0" visible="false">
+            <padding>
+                <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+            </padding>
             <children>
-                <VBox styleClass="summary-card" alignment="CENTER">
-                    <padding>
-                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                    </padding>
+                <HBox alignment="CENTER_LEFT">
                     <children>
-                        <Label text="Pending Notices" styleClass="card-title" />
-                        <Label text="5" styleClass="card-value" />
+                        <Label text="Resident Dashboard" styleClass="page-title">
+                            <font>
+                                <Font name="System Bold" size="28.0" />
+                            </font>
+                        </Label>
+                        <Region HBox.hgrow="ALWAYS" />
                     </children>
-                </VBox>
+                </HBox>
 
-                <VBox styleClass="summary-card" alignment="CENTER">
-                    <padding>
-                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                    </padding>
+                <!-- Quick Stats Cards in a clean, boxed layout -->
+                <HBox spacing="20.0" alignment="CENTER">
                     <children>
-                        <Label text="Pending Complaints" styleClass="card-title" />
-                        <Label text="2" styleClass="card-value" />
-                    </children>
-                </VBox>
-
-                <VBox styleClass="summary-card" alignment="CENTER">
-                    <padding>
-                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                    </padding>
-                    <children>
-                        <Label text="Upcoming Events" styleClass="card-title" />
-                        <Label text="3" styleClass="card-value" />
-                    </children>
-                </VBox>
-
-                <VBox styleClass="summary-card" alignment="CENTER">
-                    <padding>
-                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                    </padding>
-                    <children>
-                        <Label text="Payment Due" styleClass="card-title" />
-                        <Label text="₹5,000" styleClass="card-value" />
-                    </children>
-                </VBox>
-            </children>
-        </HBox>
-
-        <TabPane tabClosingPolicy="UNAVAILABLE">
-            <tabs>
-                <Tab text="Recent Notices">
-                    <content>
-                        <VBox spacing="10">
+                        <VBox styleClass="summary-card" alignment="CENTER" minWidth="200.0" maxWidth="240.0" minHeight="120.0">
                             <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                             </padding>
                             <children>
-                                <ListView prefHeight="200.0" styleClass="notices-list">
-                                    <!-- This would be populated from the controller -->
-                                </ListView>
+                                <Label text="Pending Bills" styleClass="card-title">
+                                    <font>
+                                        <Font name="System Bold" size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="residentPendingBillsCount" text="0" styleClass="card-value">
+                                    <font>
+                                        <Font size="32.0" />
+                                    </font>
+                                </Label>
                             </children>
                         </VBox>
-                    </content>
-                </Tab>
-                <Tab text="Maintenance Updates">
-                    <content>
-                        <VBox spacing="10">
+
+                        <VBox styleClass="summary-card" alignment="CENTER" minWidth="200.0" maxWidth="240.0" minHeight="120.0">
                             <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                             </padding>
                             <children>
-                                <ListView prefHeight="200.0" styleClass="maintenance-list">
-                                    <!-- This would be populated from the controller -->
-                                </ListView>
+                                <Label text="Pending Complaints" styleClass="card-title">
+                                    <font>
+                                        <Font name="System Bold" size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="residentPendingComplaintsCount" text="0" styleClass="card-value">
+                                    <font>
+                                        <Font size="32.0" />
+                                    </font>
+                                </Label>
                             </children>
                         </VBox>
-                    </content>
-                </Tab>
-            </tabs>
-        </TabPane>
 
-        <HBox spacing="20.0">
-            <children>
-                <VBox styleClass="chart-container" HBox.hgrow="ALWAYS">
-                    <children>
-                        <Label text="Monthly Maintenance Expenses" styleClass="chart-title" />
-                        <PieChart prefHeight="250.0" prefWidth="400.0" />
-                    </children>
-                </VBox>
+                        <VBox styleClass="summary-card" alignment="CENTER" minWidth="200.0" maxWidth="240.0" minHeight="120.0">
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                            </padding>
+                            <children>
+                                <Label text="Visitor Requests" styleClass="card-title">
+                                    <font>
+                                        <Font name="System Bold" size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="residentVisitorRequestsCount" text="0" styleClass="card-value">
+                                    <font>
+                                        <Font size="32.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </VBox>
 
-                <VBox styleClass="chart-container" HBox.hgrow="ALWAYS">
-                    <children>
-                        <Label text="Upcoming Events" styleClass="chart-title" />
-                        <TableView prefHeight="250.0" prefWidth="400.0">
-                            <columns>
-                                <TableColumn text="Date" prefWidth="100.0" />
-                                <TableColumn text="Event" prefWidth="180.0" />
-                                <TableColumn text="Location" prefWidth="120.0" />
-                            </columns>
-                        </TableView>
+                        <VBox styleClass="summary-card" alignment="CENTER" minWidth="200.0" maxWidth="240.0" minHeight="120.0">
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                            </padding>
+                            <children>
+                                <Label text="Next Payment Due" styleClass="card-title">
+                                    <font>
+                                        <Font name="System Bold" size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="residentNextPaymentDue" text="No dues" styleClass="card-value">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="residentNextPaymentDate" text="--" styleClass="card-date">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </VBox>
                     </children>
-                </VBox>
+                </HBox>
+
+                <!-- Recent Notices and Recent Visitors with reduced height and styled column headers -->
+                <HBox spacing="20.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <VBox spacing="15.0" HBox.hgrow="ALWAYS" styleClass="content-panel" maxHeight="280.0">
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                            </padding>
+                            <children>
+                                <HBox alignment="CENTER_LEFT" styleClass="panel-header">
+                                    <children>
+                                        <Label text="Recent Notices" styleClass="section-title">
+                                            <font>
+                                                <Font name="System Bold" size="18.0" />
+                                            </font>
+                                        </Label>
+                                        <Region HBox.hgrow="ALWAYS" />
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="10.0" />
+                                    </padding>
+                                </HBox>
+                                <Separator styleClass="fancy-separator" />
+                                <TableView fx:id="residentNoticesTable" VBox.vgrow="ALWAYS" styleClass="dashboard-table">
+                                    <columns>
+                                        <TableColumn fx:id="residentNoticeDate" text="Date"  />
+                                        <TableColumn fx:id="residentNoticeTitle" text="Title" />
+                                        <TableColumn fx:id="residentNoticeBy" text="Created By"  />
+                                    </columns>
+                                    <placeholder>
+                                        <Label text="No notices available" styleClass="placeholder-text" />
+                                    </placeholder>
+                                </TableView>
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="15.0" HBox.hgrow="ALWAYS" styleClass="content-panel" maxHeight="280.0">
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                            </padding>
+                            <children>
+                                <HBox alignment="CENTER_LEFT" styleClass="panel-header">
+                                    <children>
+                                        <Label text="Recent Visitors" styleClass="section-title">
+                                            <font>
+                                                <Font name="System Bold" size="18.0" />
+                                            </font>
+                                        </Label>
+                                        <Region HBox.hgrow="ALWAYS" />
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="10.0" />
+                                    </padding>
+                                </HBox>
+                                <Separator styleClass="fancy-separator" />
+                                <TableView fx:id="residentVisitorsTable" VBox.vgrow="ALWAYS" styleClass="dashboard-table" prefHeight="120.0" maxHeight="120.0">
+                                    <columns>
+                                        <TableColumn fx:id="residentVisitorDate" text="Date" />
+                                        <TableColumn fx:id="residentVisitorName" text="Name" />
+                                        <TableColumn fx:id="residentVisitorPurpose" text="Purpose"  />
+                                        <TableColumn fx:id="residentVisitorStatus" text="Status" />
+                                    </columns>
+                                    <placeholder>
+                                        <Label text="No recent visitors" styleClass="placeholder-text" />
+                                    </placeholder>
+                                </TableView>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
             </children>
-        </HBox>
+        </VBox>
+
+        <!-- Admin Dashboard View -->
+        <VBox fx:id="adminDashboard" alignment="TOP_CENTER" spacing="20.0" visible="false">
+            <padding>
+                <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+            </padding>
+            <children>
+                <HBox alignment="CENTER_LEFT">
+                    <children>
+                        <Label text="Admin Dashboard" styleClass="page-title">
+                            <font>
+                                <Font name="System Bold" size="28.0" />
+                            </font>
+                        </Label>
+                        <Region HBox.hgrow="ALWAYS" />
+                    </children>
+                </HBox>
+
+                <!-- Quick Stats Cards -->
+                <HBox spacing="20.0" alignment="CENTER">
+                    <children>
+                        <VBox styleClass="summary-card" alignment="CENTER" minWidth="200.0" maxWidth="240.0" minHeight="120.0">
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                            </padding>
+                            <children>
+                                <Label text="Pending Approvals" styleClass="card-title">
+                                    <font>
+                                        <Font name="System Bold" size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="adminPendingApprovalsCount" text="0" styleClass="card-value">
+                                    <font>
+                                        <Font size="32.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </VBox>
+
+                        <VBox styleClass="summary-card" alignment="CENTER" minWidth="200.0" maxWidth="240.0" minHeight="120.0">
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                            </padding>
+                            <children>
+                                <Label text="Complaints" styleClass="card-title">
+                                    <font>
+                                        <Font name="System Bold" size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="adminOpenComplaintsCount" text="0" styleClass="card-value">
+                                    <font>
+                                        <Font size="32.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </VBox>
+
+                        <VBox styleClass="summary-card" alignment="CENTER" minWidth="200.0" maxWidth="240.0" minHeight="120.0">
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                            </padding>
+                            <children>
+                                <Label text="Visitors Inside" styleClass="card-title">
+                                    <font>
+                                        <Font name="System Bold" size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="adminVisitorsInsideCount" text="0" styleClass="card-value">
+                                    <font>
+                                        <Font size="32.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </VBox>
+
+                        <VBox styleClass="summary-card" alignment="CENTER" minWidth="200.0" maxWidth="240.0" minHeight="120.0">
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                            </padding>
+                            <children>
+                                <Label text="Pending Bills" styleClass="card-title">
+                                    <font>
+                                        <Font name="System Bold" size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="adminPendingBillsCount" text="0" styleClass="card-value">
+                                    <font>
+                                        <Font size="32.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+
+                <!-- Recent Complaints Table (Showing Top 3) with border -->
+                <HBox spacing="20.0">
+                    <VBox spacing="15.0" styleClass="content-panel">
+                        <padding>
+                            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                        </padding>
+                        <children>
+                            <HBox alignment="CENTER_LEFT" styleClass="panel-header">
+                                <children>
+                                    <Label text="Recent Complaints" styleClass="section-title">
+                                        <font>
+                                            <Font name="System Bold" size="18.0" />
+                                        </font>
+                                    </Label>
+                                    <Region HBox.hgrow="ALWAYS" />
+                                </children>
+                                <padding>
+                                    <Insets bottom="10.0" />
+                                </padding>
+                            </HBox>
+                            <Separator styleClass="fancy-separator" />
+                            <TableView fx:id="adminComplaintsTable" VBox.vgrow="ALWAYS" styleClass="dashboard-table" prefHeight="150.0" maxHeight="150.0">
+                                <columns>
+                                    <TableColumn fx:id="adminComplaintDate" text="Date" prefWidth="120.0" styleClass="dark-blue-header" />
+                                    <TableColumn fx:id="adminComplaintSubject" text="Subject" prefWidth="250.0" styleClass="dark-blue-header" />
+                                    <TableColumn fx:id="adminComplaintResident" text="Resident" prefWidth="200.0" styleClass="dark-blue-header" />
+                                    <TableColumn fx:id="adminComplaintStatus" text="Status" prefWidth="120.0" styleClass="dark-blue-header" />
+                                </columns>
+                                <placeholder>
+                                    <Label text="No recent complaints" styleClass="placeholder-text" />
+                                </placeholder>
+                            </TableView>
+                        </children>
+                    </VBox>
+
+                    <!-- Pending Resident Approvals (Top 3) with border -->
+                    <VBox spacing="15.0" styleClass="content-panel">
+                        <padding>
+                            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                        </padding>
+                        <children>
+                            <HBox alignment="CENTER_LEFT" styleClass="panel-header">
+                                <children>
+                                    <Label text="Pending Resident Approvals" styleClass="section-title">
+                                        <font>
+                                            <Font name="System Bold" size="18.0" />
+                                        </font>
+                                    </Label>
+                                    <Region HBox.hgrow="ALWAYS" />
+                                </children>
+                                <padding>
+                                    <Insets bottom="10.0" />
+                                </padding>
+                            </HBox>
+                            <Separator styleClass="fancy-separator" />
+                            <TableView fx:id="adminApprovalsTable" styleClass="dashboard-table" prefHeight="150.0" maxHeight="150.0">
+                                <columns>
+                                    <TableColumn fx:id="adminApprovalName" text="Name" prefWidth="150.0" styleClass="dark-blue-header" />
+                                    <TableColumn fx:id="adminApprovalEmail" text="Email" prefWidth="200.0" styleClass="dark-blue-header" />
+                                    <TableColumn fx:id="adminApprovalPhone" text="Phone" prefWidth="120.0" styleClass="dark-blue-header" />
+                                    <TableColumn fx:id="adminApprovalBlock" text="Block" prefWidth="100.0" styleClass="dark-blue-header" />
+                                    <TableColumn fx:id="adminApprovalFlat" text="Flat" prefWidth="100.0" styleClass="dark-blue-header" />
+                                    <TableColumn fx:id="adminApprovalOwnership" text="Ownership" prefWidth="120.0" styleClass="dark-blue-header" />
+                                </columns>
+                                <placeholder>
+                                    <Label text="No pending approvals" styleClass="placeholder-text" />
+                                </placeholder>
+                            </TableView>
+                        </children>
+                    </VBox>
+                </HBox>
+            </children>
+        </VBox>
     </children>
-</VBox>
+</StackPane>

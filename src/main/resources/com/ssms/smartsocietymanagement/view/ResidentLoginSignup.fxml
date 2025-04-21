@@ -105,7 +105,6 @@
                                                             <String fx:value="B"/>
                                                             <String fx:value="C"/>
                                                             <String fx:value="D"/>
-                                                            <String fx:value="E"/>
                                                         </FXCollections>
                                                     </items>
                                                 </ComboBox>
@@ -118,6 +117,13 @@
                                                             <String fx:value="103"/>
                                                             <String fx:value="104"/>
                                                             <String fx:value="201"/>
+                                                            <String fx:value="202"/>
+                                                            <String fx:value="203"/>
+                                                            <String fx:value="204"/>
+                                                            <String fx:value="301"/>
+                                                            <String fx:value="302"/>
+                                                            <String fx:value="303"/>
+                                                            <String fx:value="304"/>
                                                         </FXCollections>
                                                     </items>
                                                 </ComboBox>

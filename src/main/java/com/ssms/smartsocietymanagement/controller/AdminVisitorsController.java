@@ -2,6 +2,7 @@ package com.ssms.smartsocietymanagement.controller;
 
 import com.ssms.smartsocietymanagement.model.Admin;
 import com.ssms.smartsocietymanagement.model.Flat;
+import com.ssms.smartsocietymanagement.model.Resident;
 import com.ssms.smartsocietymanagement.model.Visitor;
 import com.ssms.smartsocietymanagement.util.DatabaseHandler;
 import javafx.beans.property.SimpleStringProperty;
@@ -39,7 +40,6 @@ public class AdminVisitorsController implements Initializable {
     @FXML private TableColumn<Visitor, String> exitTimeColumn;
     @FXML private TableColumn<Visitor, String> statusColumn;
 
-    @FXML private TextField filterField;
     @FXML private Button refreshBtn;
     @FXML private Button recordExitBtn;
     @FXML private Button registerVisitorBtn;
@@ -60,7 +60,6 @@ public class AdminVisitorsController implements Initializable {
         filteredVisitors = new FilteredList<>(allVisitors, p -> true);
         visitorsTable.setItems(filteredVisitors);
 
-        setupFilters();
         recordExitBtn.setDisable(true);
 
         // Setup block selection change listener
@@ -93,6 +92,21 @@ public class AdminVisitorsController implements Initializable {
             return new SimpleStringProperty(timestamp != null ? dateFormat.format(timestamp) : "-");
         });
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        idColumn.setPrefWidth(100);
+        nameColumn.setPrefWidth(120);
+        mobileColumn.setPrefWidth(140);
+        purposeColumn.setPrefWidth(180);
+        blockColumn.setPrefWidth(80);
+        flatNumberColumn.setPrefWidth(80);
+        entryTimeColumn.setPrefWidth(110);
+        exitTimeColumn.setPrefWidth(110);
+
+        for (TableColumn<Visitor, ?> column : visitorsTable.getColumns()) {
+            column.setStyle("-fx-alignment: CENTER; -fx-text-alignment: CENTER;");
+        }
+        // Set column resize policy
+        visitorsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         // Add color coding for status
         statusColumn.setCellFactory(column -> {
@@ -130,31 +144,6 @@ public class AdminVisitorsController implements Initializable {
         });
     }
 
-    private void setupFilters() {
-        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredVisitors.setPredicate(visitor -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-
-                String lowerCaseFilter = newValue.toLowerCase();
-                if (visitor.getName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (visitor.getBlock().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (visitor.getFlatNumber().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (visitor.getStatus().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (visitor.getPurpose().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (visitor.getMobileNumber().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                }
-                return false;
-            });
-        });
-    }
 
     private void loadAllVisitors() {
         try {
