@@ -120,14 +120,10 @@ public class DashboardContentController implements Initializable {
         // Initialize tables
         initializeResidentNoticesTable();
         initializeResidentVisitorsTable();
-//        initializeResidentBillsTable();
-//        initializeResidentAmenitiesTable();
 
         // Load data
         loadResidentNotices();
         loadResidentVisitors();
-//        loadResidentBills();
-//        loadResidentAmenities();
 
         // Update summary counts
         updateResidentSummaries();

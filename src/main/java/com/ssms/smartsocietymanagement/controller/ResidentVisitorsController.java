@@ -91,6 +91,7 @@ public class ResidentVisitorsController implements Initializable {
         // Set column resize policy
         pendingVisitorsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
+
         pendingVisitorsTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             boolean hasSelection = newSelection != null;
             approveVisitorBtn.setDisable(!hasSelection);
@@ -99,6 +100,7 @@ public class ResidentVisitorsController implements Initializable {
 
         approveVisitorBtn.setDisable(true);
         rejectVisitorBtn.setDisable(true);
+
     }
 
     private void setupVisitorHistoryTable() {
@@ -124,11 +126,11 @@ public class ResidentVisitorsController implements Initializable {
         historyExitTimeColumn.setPrefWidth(110);
         historyStatusColumn.setPrefWidth(100);
 
-        for (TableColumn<Visitor, ?> column : pendingVisitorsTable.getColumns()) {
+        for (TableColumn<Visitor, ?> column : visitorHistoryTable.getColumns()) {
             column.setStyle("-fx-alignment: CENTER; -fx-text-alignment: CENTER;");
         }
         // Set column resize policy
-        pendingVisitorsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        visitorHistoryTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
 
@@ -137,6 +139,7 @@ public class ResidentVisitorsController implements Initializable {
             DatabaseHandler dbHandler = new DatabaseHandler();
             pendingVisitors.clear();
             pendingVisitors.addAll(dbHandler.getPendingVisitorsByFlat(flatBlock, flatNumber));
+            pendingVisitorsTable.setItems(FXCollections.observableArrayList(pendingVisitors));
             dbHandler.closeConnection();
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Database Error", "Could not load pending visitors: " + e.getMessage());
@@ -149,6 +152,7 @@ public class ResidentVisitorsController implements Initializable {
             DatabaseHandler dbHandler = new DatabaseHandler();
             allVisitors.clear();
             allVisitors.addAll(dbHandler.getVisitorsByFlat(flatBlock, flatNumber));
+            visitorHistoryTable.setItems(FXCollections.observableArrayList(allVisitors));
             dbHandler.closeConnection();
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Database Error", "Could not load visitor history: " + e.getMessage());

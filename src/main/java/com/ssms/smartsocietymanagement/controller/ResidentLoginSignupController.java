@@ -133,6 +133,10 @@ public class ResidentLoginSignupController {
             return;
         }
 
+        if(!validateName(name)){
+            showAlert(Alert.AlertType.ERROR, "Signup Error", "Please fill correct name");
+            return ;
+        }
         if(!validateUsername(username)){
             showAlert(Alert.AlertType.ERROR, "Signup Error", "Please fill correct username");
             return ;
@@ -223,6 +227,9 @@ public class ResidentLoginSignupController {
 
     private boolean validateUsername(String username) {
         return username.matches("^[a-zA-Z][a-zA-Z0-9_]*$");
+    }
+    private boolean validateName(String name) {
+        return name.matches("[a-zA-Z ]+");
     }
 
 

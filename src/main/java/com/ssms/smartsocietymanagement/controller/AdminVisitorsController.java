@@ -206,6 +206,15 @@ public class AdminVisitorsController implements Initializable {
                 String selectedBlock = blockComboBox.getValue();
                 String selectedFlatNumber = flatNumberComboBox.getValue();
 
+                if(!validateName(visitorName)){
+                    showAlert(Alert.AlertType.ERROR, "Signup Error", "Please fill correct name");
+                    return;
+                }
+                if(!validatePhonenumber(visitorMobile)){
+                    showAlert(Alert.AlertType.ERROR, "Signup Error", "Please fill correct phonenumber");
+                    return;
+                }
+
                 // Generate unique ID
                 String visitorId = generatevisitorId();
 
@@ -324,5 +333,13 @@ public class AdminVisitorsController implements Initializable {
         long timestamp = System.currentTimeMillis();
         int random = (int)(Math.random() * 1000);
         return "VIS" + timestamp + random;
+    }
+
+    private boolean validatePhonenumber(String phonenumber) {
+        return phonenumber.matches("\\d{10}");
+    }
+
+    private boolean validateName(String name) {
+        return name.matches("[a-zA-Z ]+");
     }
 }
